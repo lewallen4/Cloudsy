@@ -1,3 +1,7 @@
+![alt text](https://github.com/lewallen4/Cloudsy/blob/main/db/logo.gif?raw=true)
+
+
+
 Its really simple to use. it just currently requires a windows environment with gitbash. If you do not already have grep, awk and sed, then you will need to have those installed as well.
 
 
