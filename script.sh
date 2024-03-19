@@ -1,16 +1,25 @@
 #!/bin/bash
 
 # ASCII art for the word "weather"
-echo " ______     __         ______     __  __     _____     ______     __  __    "
-echo "/\  ___\   /\ \       /\  __ \   /\ \/\ \   /\  __.  /\  ___\   /\ \_\ \   "
-echo "\ \ \____  \ \ \____  \ \ \/\ \  \ \ \_\ \  \ \ \/\ \ \ \___  \  \ \____ \  "
-echo " \ \_____\  \ \_____\  \ \_____\  \ \_____\  \ \____-  \/\_____\  \/\_____\ "
-echo "  \/_____/   \/_____/   \/_____/   \/_____/   \/____/   \/_____/   \/_____/ "
+echo " ______     __         ______     __  __     ____    ______     __  __    "
+echo "/\  ___\   /\ \       /\  __ \   /\ \/\ \   | |  \  /\  ___\   /\ \_\ \   "
+echo "\ \ \____  \ \ \____  \ \ \/\ \  \ \ \_\ \  | | . \ \ \___  \  \ \____ \  "
+echo " \ \_____\  \ \_____\  \ \_____\  \ \_____\ | |___/  \/\_____\  \/\_____\ "
+echo "  \/_____/   \/_____/   \/_____/   \/_____/ |/___/    \/_____/   \/_____/ "
 echo " "
 echo " "
 
 # Prompt user for zip code
 read -p "	Enter your zip code: " zip_code
+
+
+
+# Sanitize and extract only the first 5 digits from the zip code
+
+
+zip_code=${zip_code//[^0-9]/}   # Remove all non-digit characters
+zip_code=${zip_code:0:5}         # Extract the first 5 digits
+
 
 # Display entered zip code
 echo "	You entered zip code: $zip_code"
@@ -143,7 +152,7 @@ fi
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOAA Information</title>
+    <title>Cloudsy</title>
     <style>
         body {
             display: flex;
