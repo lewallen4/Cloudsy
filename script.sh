@@ -6,16 +6,16 @@ echo "/\  ___\   /\ \       /\  __ \   /\ \/\ \   /\  __.  /\  ___\   /\ \_\ \  
 echo "\ \ \____  \ \ \____  \ \ \/\ \  \ \ \_\ \  \ \ \/\ \ \ \___  \  \ \____ \  "
 echo " \ \_____\  \ \_____\  \ \_____\  \ \_____\  \ \____-  \/\_____\  \/\_____\ "
 echo "  \/_____/   \/_____/   \/_____/   \/_____/   \/____/   \/_____/   \/_____/ "
+echo " "
+echo " "
 
 # Prompt user for zip code
-read -p "Enter your zip code: " zip_code
+read -p "	Enter your zip code: " zip_code
 
 # Display entered zip code
-echo "You entered zip code: $zip_code"
+echo "	You entered zip code: $zip_code"
 echo " "
 echo " "
-echo "		Generating..."
-echo "			Please wait"
 
 
 
@@ -26,10 +26,30 @@ echo "			Please wait"
 rawcurrentlat=$(cat zipcodes/uszips.csv | grep -w "\"$zip_code\"" | awk -F',' '{gsub(/"/, "", $2); print $2}')
 rawcurrentlon=$(cat zipcodes/uszips.csv | grep -w "\"$zip_code\"" | awk -F',' '{gsub(/"/, "", $3); print $3}')
 
-currentlat=$(printf "%.4f" $rawcurrentlat)
+adjustedlat=$(printf "%.4f" $rawcurrentlat)
 
 
-currentlon=$(printf "%.4f" $rawcurrentlon)
+adjustedlon=$(printf "%.4f" $rawcurrentlon)
+
+
+
+
+
+# make an edit here and modify content so that if it ends in a 0, remove the 0 AFTER the decimal
+
+# Check if the variable ends with ".0" or ".00" or any number of zeroes
+# Remove trailing zeroes after the decimal point
+if [[ $adjustedlat =~ \.[0-9]*0$ ]]; then
+    currentlat="${adjustedlat%0}"
+else currentlat="${adjustedlat}"
+fi
+
+
+
+if [[ $adjustedlon =~ \.[0-9]*0$ ]]; then
+    currentlon="${adjustedlon%0}"
+	else currentlon="${adjustedlon}"
+fi
 
 
 
@@ -38,7 +58,10 @@ currentlon=$(printf "%.4f" $rawcurrentlon)
 while true; do
 
     # Info pulling
-
+	echo "		Generating..."
+	echo "			Please wait"
+	echo " "
+	echo " "
 
     curl -s "https://api.weather.gov/points/${currentlat},${currentlon}" > db/stationlookup.json
     currentstation=$(cat "db/stationlookup.json" | grep '"radarStation"' | awk -F'"' '{print $4}')
@@ -149,7 +172,7 @@ fi
 		
 <p><img src="logo.gif" alt="Your Logo" /></p>
 
-        <h3>Weather Information</h3>
+        <h3>NOAA Information</h3>
         <p><strong>City Name:</strong> $currentcity</p>
         <p><strong>Condition:</strong> $currentcondition</p>
         <p><strong>Current Temp:</strong> $currenttemp°F</p>
@@ -165,6 +188,6 @@ EOF
 powershell -Command "Start-Process 'db/frontEnd.html' -WindowStyle Maximized"
 
     # Wait for 600 seconds (10 minutes) before fetching data again
-	echo "will refresh in 10 minutes..."
+	echo "  will refresh in 10 minutes..."
     sleep 600
 done
