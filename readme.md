@@ -37,16 +37,22 @@ Usage
 
 
 
-License
+<b>License</b>
 
 The zip code data (uszips.csv) included in this project is sourced from public domain data and is subject to its own license. All weather data fetched from NOAA and the National Weather Service belong to their respective owners and are used in compliance with their terms of service.
-Disclaimer
+
+
+<b>Disclaimer</b>
 
 Cloudsy is provided as-is, without any warranty or guarantee. The accuracy of the weather data fetched depends on the services provided by NOAA and the National Weather Service.
-Contributing
+
+
+<b>Contributing</b>
 
 Feel free to contribute to this project by opening issues or submitting pull requests. Your contributions are greatly appreciated!
-Acknowledgements
+
+
+<b>Acknowledgements</b>
 
 Cloudsy is made possible by the contributions of the open-source community and the data provided by NOAA and the National Weather Service.
 Happy Weathering!
