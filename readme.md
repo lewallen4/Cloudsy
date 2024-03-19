@@ -2,32 +2,40 @@
 
 
 Cloudsy is a simple command-line weather application that fetches weather data from NOAA (National Oceanic and Atmospheric Administration) and the National Weather Service. It displays the current weather conditions, including temperature and radar information, for a given location based on zip code.
+
+
 Prerequisites
 
     Windows environment with Git Bash installed
     grep, awk, and sed should be available in your environment
 
+
 Usage
 
-    Clone the repository to your local machine:
+    # Clone the repository to your local machine:
 
     bash
 
-git clone https://github.com/your_username/Cloudsy.git
+    git clone https://github.com/your_username/Cloudsy.git
 
-Navigate to the project directory:
+    # Navigate to the project directory:
 
-bash
+    bash
 
-cd Cloudsy
+    cd Cloudsy
 
-Run the script:
+    # Run the script:
 
-bash
+    bash
 
     ./Cloudsy.sh
 
-    Enter your zip code when prompted. Note that Cloudsy currently supports US zip codes only.
+    # Enter your zip code when prompted. Note that Cloudsy currently supports US zip codes only.
+
+
+
+
+
 
 License
 
