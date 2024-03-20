@@ -14,19 +14,13 @@ Cloudsy is a simple command-line weather application that fetches weather data f
 
     # Clone the repository to your local machine:
 
-    bash
-
     git clone https://github.com/your_username/Cloudsy.git
 
     # Navigate to the project directory:
 
-    bash
-
     cd Cloudsy
 
     # Run the script:
-
-    bash
 
     ./Cloudsy.sh
 
