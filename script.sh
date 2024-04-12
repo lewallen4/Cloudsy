@@ -13,9 +13,7 @@ echo " "
 read -p "	Enter your zip code: " zip_code
 
 
-
 # Sanitize and extract only the first 5 digits from the zip code
-
 
 zip_code=${zip_code//[^0-9]/}   # Remove all non-digit characters
 zip_code=${zip_code:0:5}         # Extract the first 5 digits
@@ -26,25 +24,13 @@ echo "	You entered zip code: $zip_code"
 echo " "
 echo " "
 
-
-
 # only using govt resources
-
-
 
 rawcurrentlat=$(cat zipcodes/uszips.csv | grep -w "\"$zip_code\"" | awk -F',' '{gsub(/"/, "", $2); print $2}')
 rawcurrentlon=$(cat zipcodes/uszips.csv | grep -w "\"$zip_code\"" | awk -F',' '{gsub(/"/, "", $3); print $3}')
-
 adjustedlat=$(printf "%.4f" $rawcurrentlat)
-
-
 adjustedlon=$(printf "%.4f" $rawcurrentlon)
 
-
-
-
-
-# make an edit here and modify content so that if it ends in a 0, remove the 0 AFTER the decimal
 
 # Check if the variable ends with ".0" or ".00" or any number of zeroes
 # Remove trailing zeroes after the decimal point
@@ -54,13 +40,10 @@ else currentlat="${adjustedlat}"
 fi
 
 
-
 if [[ $adjustedlon =~ \.[0-9]*0$ ]]; then
     currentlon="${adjustedlon%0}"
 	else currentlon="${adjustedlon}"
 fi
-
-
 
 
 # Loop indefinitely
@@ -79,10 +62,6 @@ while true; do
 	sevenday=$(cat "db/stationlookup.json" | grep '"forecast"' | awk -F'"' '{print $4}')
 	curl -s "$sevenday" > db/7day.json
 
-    
-	
-	
-
 	#	You now have 3 assets
 	# stationlookup
 	# 7day.json
@@ -91,39 +70,19 @@ while true; do
 	currentcity=$(cat db/stationlookup.json | grep city | awk 'NR==2' | awk -F'"' '{print $4}')
     currentcondition=$(cat "db/7day.json" | grep -m 1 -A 27 '"number": 1,' | grep '"shortForecast"' | sed 's/.*: "\(.*\)".*/\1/')
 	currenttemp=$(cat "db/7day.json" | grep -m 1 -A 27 '"number": 1,' | grep '"temperature"' | sed 's/.*: "\(.*\)".*/\1/' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
-	
-	
-	
-	
-	
+	hourlyURL=$(cat "db/stationlookup.json" | grep '"forecastHourly"' | awk -F'"' '{print $4}')
+	currentcond=$(cat "db/7day.json" | grep -m 1 -A 27 '"number": 1,' | grep '"detailedForecast"' | sed 's/^.*"\([^"]*\)"[^"]*$/\1/' | awk '{for(i=1;i<=NF;i++) {printf "%s ",$i;if (i%8==0) printf "<p></p> "};print ""}')	
+
+# unused but it works	
 	if grep -q "today" db/7day.json; then
     grep "today" db/7day.json
 else
     grep "tonight" db/7day.json
 fi
-
-	
-	
-	
-    
-	
-	hourlyURL=$(cat "db/stationlookup.json" | grep '"forecastHourly"' | awk -F'"' '{print $4}')
 	
 	curl -s "$hourlyURL" > db/TOD.json
 	
-	
-	
-	
-	
-	
-	#brief description below radar
-	
-	
-	currentcond=$(cat "db/7day.json" | grep -m 1 -A 27 '"number": 1,' | grep '"detailedForecast"' | sed 's/^.*"\([^"]*\)"[^"]*$/\1/' | awk '{for(i=1;i<=NF;i++) {printf "%s ",$i;if (i%8==0) printf "<p></p> "};print ""}'
-)
-	# Hours
-	
-	
+# Hours
 hourRawTime1a=$(cat "db/TOD.json" | grep -m 1 startTime | awk -F '[:-T]' '{print $4}')
 hourRawTime2a=$(cat "db/TOD.json" | grep -m 2 startTime | awk -F '[:-T]' '{print $4}' | tail -n 1)
 hourRawTime3a=$(cat "db/TOD.json" | grep -m 3 startTime | awk -F '[:-T]' '{print $4}' | tail -n 1)
@@ -181,106 +140,56 @@ convert_to_12_hour_format() {
 
 hour=$hourRawTime1a
 hourTime1=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime2a
 hourTime2=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime3a
 hourTime3=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime4a
 hourTime4=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime5a
 hourTime5=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime6a
 hourTime6=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime7a
 hourTime7=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime8a
 hourTime8=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime9a
 hourTime9=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime10a
 hourTime10=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime11a
 hourTime11=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime12a
 hourTime12=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime13a
 hourTime13=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime14a
 hourTime14=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime15a
 hourTime15=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime16a
 hourTime16=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime17a
 hourTime17=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime18a
 hourTime18=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime19a
 hourTime19=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime20a
 hourTime20=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime21a
 hourTime21=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime22a
 hourTime22=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime23a
 hourTime23=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime24a
 hourTime24=$(convert_to_12_hour_format "$hour")
-
 hour=$hourRawTime25a
 hourTime25=$(convert_to_12_hour_format "$hour")
 
-	
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-    # Write HTML content to a file
+# Write HTML content to a file
     cat <<EOF >db/frontEndraw.html
 <!DOCTYPE html>
 <html lang="en">
@@ -326,6 +235,7 @@ hourTime25=$(convert_to_12_hour_format "$hour")
             overflow: hidden;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
             margin: 0 auto;
+			background: linear-gradient(45deg, #e4b5d9, #abd4f2);
         }
 
         th,
@@ -337,6 +247,8 @@ hourTime25=$(convert_to_12_hour_format "$hour")
 
         th {
             text-align: left;
+			background-color: rgba(255,255,255,0.6);
+			background: linear-gradient(45deg, #e4b5d9, #abd4f2);
         }
 
         thead th {
@@ -344,7 +256,7 @@ hourTime25=$(convert_to_12_hour_format "$hour")
         }
 
         tbody tr:hover {
-            background-color: rgba(200,200,200,0.3);
+            background-color: rgba(255,255,255,0.3);
         }
 
         td {
@@ -373,15 +285,17 @@ hourTime25=$(convert_to_12_hour_format "$hour")
         <p><strong>Condition:</strong> $currentcondition</p>
         <p><strong>Current Temp:</strong> $currenttemp°F</p>
         <p><strong>Radar Station:</strong> $currentstation</p>
-        <img src="radar.gif" alt="Radar">
+<table border="1">
+		<img src="radar.gif" alt="Radar">
+</table>
         <p>$currentcond</p>
 
         <h2><p style="margin-top: 40px;">Hourly Forecast</p></h2>
 <table border="1">
     <tr>
-        <td>Local Time</td>
-        <td>Temperature</td>
-        <td>Change of Rain</td>
+        <th>Local Time</th>
+        <th>Temperature</th>
+        <th>Change of Rain</th>
     </tr>
     <tr>
         <td>$hourTime1</td>
@@ -530,17 +444,26 @@ awk '{if (gsub("cloudy", "cloudsy")) print; else print $0}' db/frontEndraw.html 
 
 
 
+
+# Function to close a browser tab with a specific title
+
+
+
+
+
+
+
+
+
+
+
 # open HTML doc
 
 powershell -Command "Start-Process 'db/frontEnd.html' -WindowStyle Maximized"
 
 
 
-
-
-
-
-    # Wait for 600 seconds (10 minutes) before fetching data again
+# Wait for 600 seconds (10 minutes) before fetching data again
 	echo "  will refresh in 10 minutes..."
     sleep 600
 done
