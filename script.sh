@@ -45,6 +45,18 @@ if [[ $adjustedlon =~ \.[0-9]*0$ ]]; then
 	else currentlon="${adjustedlon}"
 fi
 
+# Check if the system is running Linux
+if [ "$(uname)" == "Linux" ]; then
+    osVer="linux"
+# Check if the system is running Windows
+elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
+    osVer="windows"
+elif [ "$(expr substr $(uname -s) 1 9)" == "CYGWIN_NT" ]; then
+    osVer="windows"
+else
+	osVer="windows"
+fi
+
 
 # Loop indefinitely
 while true; do
@@ -445,21 +457,21 @@ awk '{if (gsub("cloudy", "cloudsy")) print; else print $0}' db/frontEndraw.html 
 
 
 
-# Function to close a browser tab with a specific title
+# Function to open a OS specific Browser
+
+html_file="db/frontEnd.html"
+
+# window launching
 
 
+	if [ $osVer == "linux" ]; then
+	xdg-open "$html_file"
+	fi
+	
+	if [ $osVer == "windows" ]; then
+    powershell -Command "Start-Process 'db/frontEnd.html' -WindowStyle Maximized"
+	fi
 
-
-
-
-
-
-
-
-
-# open HTML doc
-
-powershell -Command "Start-Process 'db/frontEnd.html' -WindowStyle Maximized"
 
 
 
