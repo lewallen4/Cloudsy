@@ -12,25 +12,20 @@ echo " "
 # Prompt user for zip code
 read -p "	Enter your zip code: " zip_code
 
-
 # Sanitize and extract only the first 5 digits from the zip code
-
 zip_code=${zip_code//[^0-9]/}   # Remove all non-digit characters
 zip_code=${zip_code:0:5}         # Extract the first 5 digits
-
 
 # Display entered zip code
 echo "	You entered zip code: $zip_code"
 echo " "
 echo " "
 
-# only using govt resources
-
+# extract Latitude and Longitude from Zip Code
 rawcurrentlat=$(cat zipcodes/uszips.csv | grep -w "\"$zip_code\"" | awk -F',' '{gsub(/"/, "", $2); print $2}')
 rawcurrentlon=$(cat zipcodes/uszips.csv | grep -w "\"$zip_code\"" | awk -F',' '{gsub(/"/, "", $3); print $3}')
 adjustedlat=$(printf "%.4f" $rawcurrentlat)
 adjustedlon=$(printf "%.4f" $rawcurrentlon)
-
 
 # Check if the variable ends with ".0" or ".00" or any number of zeroes
 # Remove trailing zeroes after the decimal point
@@ -39,13 +34,12 @@ if [[ $adjustedlat =~ \.[0-9]*0$ ]]; then
 else currentlat="${adjustedlat}"
 fi
 
-
 if [[ $adjustedlon =~ \.[0-9]*0$ ]]; then
     currentlon="${adjustedlon%0}"
 	else currentlon="${adjustedlon}"
 fi
 
-# Check if the system is running Linux
+# Check if the system is running Linux or Windows
 if [ "$(uname)" == "Linux" ]; then
     osVer="linux"
 # Check if the system is running Windows
@@ -57,8 +51,7 @@ else
 	osVer="windows"
 fi
 
-
-# Loop indefinitely
+# Main loop indefinitely
 while true; do
 
     # Info pulling
@@ -73,12 +66,10 @@ while true; do
     curl -s "https://radar.weather.gov/ridge/standard/${currentstation}_loop.gif" > db/radar.gif
 	sevenday=$(cat "db/stationlookup.json" | grep '"forecast"' | awk -F'"' '{print $4}')
 	curl -s "$sevenday" > db/7day.json
-
 	#	You now have 3 assets
 	# stationlookup
 	# 7day.json
 	# radar.gif
-	
 	currentcity=$(cat db/stationlookup.json | grep city | awk 'NR==2' | awk -F'"' '{print $4}')
     currentcondition=$(cat "db/7day.json" | grep -m 1 -A 27 '"number": 1,' | grep '"shortForecast"' | sed 's/.*: "\(.*\)".*/\1/')
 	currenttemp=$(cat "db/7day.json" | grep -m 1 -A 27 '"number": 1,' | grep '"temperature"' | sed 's/.*: "\(.*\)".*/\1/' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
@@ -129,9 +120,6 @@ for i in {1..25}; do
 	eval hourRain${i}a=$(cat 'db/TOD.json' | grep -m $i -A 2 '"probabilityOfPrecipitation' | awk -F '[:]' '{print $2}' | awk -F ',' '{print $1}' | awk -F '[ ]' '{print $2}' | tail -n 1)
 done
 
-
-
-	
 convert_to_12_hour_format() {
     local hour=$1
 
@@ -149,7 +137,6 @@ convert_to_12_hour_format() {
 }
 
 # Generate Times
-
 hour=$hourRawTime1a
 hourTime1=$(convert_to_12_hour_format "$hour")
 hour=$hourRawTime2a
@@ -443,27 +430,13 @@ hourTime25=$(convert_to_12_hour_format "$hour")
 
 EOF
 
-
-
-
 # fix the words
-
 awk '{if (gsub("Cloudy", "Cloudsy")) print; else print $0}' db/frontEndraw.html > db/frontEnd.html
 awk '{if (gsub("cloudy", "cloudsy")) print; else print $0}' db/frontEndraw.html > db/frontEnd.html
 
-
-
-
-
-
-
 # Function to open a OS specific Browser
-
 html_file="db/frontEnd.html"
-
 # window launching
-
-
 	if [ $osVer == "linux" ]; then
 	xdg-open "$html_file"
 	fi
@@ -471,9 +444,6 @@ html_file="db/frontEnd.html"
 	if [ $osVer == "windows" ]; then
     powershell -Command "Start-Process 'db/frontEnd.html' -WindowStyle Maximized"
 	fi
-
-
-
 
 # Wait for 600 seconds (10 minutes) before fetching data again
 	echo "  will refresh in 10 minutes..."
