@@ -51,6 +51,85 @@ else
 	osVer="windows"
 fi
 
+
+# The Error Zone : Fun stuff
+
+Error_time() {
+    random_number=$((RANDOM % 2))  # Generate a random number between 0 and 1
+    case $random_number in
+        0)
+            echo "
+ █     █░ ██░ ██  ▒█████   ▒█████   ██▓███    ██████                            
+▓█░ █ ░█░▓██░ ██▒▒██▒  ██▒▒██▒  ██▒▓██░  ██▒▒██    ▒                            
+▒█░ █ ░█ ▒██▀▀██░▒██░  ██▒▒██░  ██▒▓██░ ██▓▒░ ▓██▄                              
+░█░ █ ░█ ░▓█ ░██ ▒██   ██░▒██   ██░▒██▄█▓▒ ▒  ▒   ██▒                           
+░░██▒██▓ ░▓█▒░██▓░ ████▓▒░░ ████▓▒░▒██▒ ░  ░▒██████▒▒ ██▓                       
+░ ▓░▒ ▒   ▒ ░░▒░▒░ ▒░▒░▒░ ░ ▒░▒░▒░ ▒█▓▒ ░  ░▒ ▒▓▒ ▒ ░ ▒▓▒                       
+  ▒ ░ ░   ▒ ░▒░ ░  ░ ▒ ▒░   ░ ▒ ▒░ ▒▓▒░ ░   ░ ░▒  ░ ░ ░▒                        
+  ░   ░   ░  ░░ ░░ ░ ░ ▒  ░ ░ ░ ▒  ░▒ ░     ░  ░  ░   ░                         
+    ░     ░  ░  ░    ░ ░      ░ ░  ░░             ░    ░                        
+ ███▄    █  ▒█████      █     █░▓█████ ▄▄▄     ▄▄▄█████▓ ██░ ██ ▓█████  ██▀███  
+ ██ ▀█   █ ▒██▒  ██▒   ▓█░ █ ░█░▓█   ▀▒████▄   ▓  ██▒ ▓▒▓██░ ██▒▓█   ▀ ▓██ ▒ ██▒
+▓██  ▀█ ██▒▒██░  ██▒   ▒█░ █ ░█ ▒███  ▒██  ▀█▄ ▒ ▓██░ ▒░▒██▀▀██░▒███   ▓██ ░▄█ ▒
+▓██▒  ▐▌██▒▒██   ██░   ░█░ █ ░█ ▒▓█  ▄░██▄▄▄▄██░ ▓██▓ ░ ░▓█ ░██ ▒▓█  ▄ ▒██▀▀█▄  
+▒██░   ▓██░░ ████▓▒░   ░░██▒██▓ ░▒████▒▓█   ▓██▒ ▒██▒ ░ ░▓█▒░██▓░▒████▒░██▓ ▒██▒
+░ ▒░   ▒ ▒ ░ ▒░▒░▒░    ░ ▓░▒ ▒  ░░ ▒░ ░▒▒   ▓▒█░ ▒ ░░    ▒ ░░▒░▒░░ ▒░ ░░ ▒▓ ░▒▓░
+░ ░░   ░ ▒░  ░ ▒ ▒░      ▒ ░ ░   ░ ░  ░ ▒   ▒▒ ░   ░     ▒ ░▒░ ░ ░ ░  ░  ░▒ ░ ▒░
+   ░   ░ ░ ░ ░ ░ ▒       ░   ░     ░    ░   ▒    ░       ░  ░░ ░   ░     ░░   ░ 
+       ░   an  ░ ░  error  ░   has ░  ░     ░  ░ occurred░  ░  ░   ░  ░   ░     "
+	
+            ;;
+        1)
+            echo "
+ _____                                            _____ 
+( ___ )                                          ( ___ )
+ |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | 
+ |   |                                            |   | 
+ |   |  |w|e|l|l|   |t|h|a|t|s|   |b|a|d|         |   | 
+ |   |                                            |   | 
+ |   |        |t|h|e| |w|e|a|t|h|e|r| |b|r|o|k|e| |   | 
+ |   |                                            |   | 
+ |   |      |e|i|t|h|e|r| |t|h|e|r|e|s|           |   | 
+ |   |  +=+=+=+=+=+=+=+=+=+=+-+=+=+=+=+=+=+=+=+   |   | 
+ |   | ||C|O|N|N|E|C|T|I|O|N| |P|R|O|B|L|E|M|S||  |   | 
+ |   |  +=+=+=+=+=+=+=+=+=+=+ +=+=+=+=+=+=+=+=+   |   | 
+ |   |                  |o|r|                     |   | 
+ |   |                                            |   | 
+ |   |   ||s|o|m|e|o|n|e| |d|e|s|t|r|o|y|e|d||    |   | 
+ |   |  +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+   |   | 
+ |   | ||T|H|E| |W|E|A|T|H|E|R| |S|E|R|V|I|C|E||  |   | 
+ |   |  +-+-+-+ +-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+   |   | 
+ |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| 
+(_____)      error fetching data                 (_____)"
+            ;;
+        *)
+            echo "Unknown error"
+            ;;
+    esac
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Main loop indefinitely
 while true; do
 
@@ -62,6 +141,14 @@ while true; do
 
     curl -s "https://api.weather.gov/points/${currentlat},${currentlon}" > db/stationlookup.json
     currentstation=$(cat "db/stationlookup.json" | grep '"radarStation"' | awk -F'"' '{print $4}')
+	errorcheck=$(cat db/stationlookup.json | grep fireWeather)
+	
+	if [ -z "${errorcheck}" ]; then
+    Error_time
+	exit
+	fi
+	
+	
 
     curl -s "https://radar.weather.gov/ridge/standard/${currentstation}_loop.gif" > db/radar.gif
 	sevenday=$(cat "db/stationlookup.json" | grep '"forecast"' | awk -F'"' '{print $4}')
@@ -431,8 +518,8 @@ hourTime25=$(convert_to_12_hour_format "$hour")
 EOF
 
 # fix the words
-awk '{if (gsub("Cloudy", "Cloudsy")) print; else print $0}' db/frontEndraw.html > db/frontEnd.html
-awk '{if (gsub("cloudy", "cloudsy")) print; else print $0}' db/frontEndraw.html > db/frontEnd.html
+awk '{if (gsub("Cloudy", "Cloudsy")) print; else print $0}' db/frontEndraw.html > db/frontEnd1.html
+awk '{if (gsub("cloudy", "cloudsy")) print; else print $0}' db/frontEnd1.html > db/frontEnd.html
 
 # Function to open a OS specific Browser
 html_file="db/frontEnd.html"
@@ -442,8 +529,12 @@ html_file="db/frontEnd.html"
 	fi
 	
 	if [ $osVer == "windows" ]; then
-    powershell -Command "Start-Process 'db/frontEnd.html' -WindowStyle Maximized"
+    powershell -Command "Start-Process -FilePath 'db/frontEnd.html' -WindowStyle Normal"
 	fi
+
+# cleanup
+rm db/frontEndraw.html
+rm db/frontEnd1.html
 
 # Wait for 600 seconds (10 minutes) before fetching data again
 	echo "  will refresh in 10 minutes..."
