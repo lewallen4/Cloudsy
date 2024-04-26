@@ -299,29 +299,33 @@ hourTime25=$(convert_to_12_hour_format "$hour")
             border: 5px solid white;
             padding: 20px;
             border-radius: 10px;
-            overflow: auto; /* Add overflow: auto; to enable scrolling if content overflows */
-			margin-top: 1025px; /* Add negative margin-top to extend scrolling slightly above the top */
-            padding-top: 1px; /* Add padding-top to compensate for negative margin-top */
-        
+            overflow: auto;
         }
         img {
             max-width: 100%;
-            max-height: 100%; /* Add max-height: 100%; to ensure the image fits within the container */
-            margin-bottom: 20px; /* Add margin-bottom to create space between the image and other content */
+            max-height: 100%;
+            margin-bottom: 20px;
+        }
+        .left-content {
+            display: inline-block;
+            text-align: left;
+            vertical-align: top; /* Align content at the top */
+            width: 45%; /* Adjust the width as needed */
+            margin-right: 5%; /* Add some margin between the left and right content */
         }
         .table-container {
-            display: block;
+            display: inline-block;
             text-align: center;
-            margin-top: 40px; /* Adjusted margin here */
+            width: 45%; /* Adjust the width as needed */
         }
 
         table {
-            width: 400px;
+            width: 100%;
             border-collapse: collapse;
             overflow: hidden;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
             margin: 0 auto;
-			background: linear-gradient(45deg, #e4b5d9, #abd4f2);
+            background: linear-gradient(45deg, #e4b5d9, #abd4f2);
         }
 
         th,
@@ -333,8 +337,8 @@ hourTime25=$(convert_to_12_hour_format "$hour")
 
         th {
             text-align: left;
-			background-color: rgba(255,255,255,0.6);
-			background: linear-gradient(45deg, #e4b5d9, #abd4f2);
+            background-color: rgba(255,255,255,0.6);
+            background: linear-gradient(45deg, #e4b5d9, #abd4f2);
         }
 
         thead th {
@@ -363,21 +367,21 @@ hourTime25=$(convert_to_12_hour_format "$hour")
 </head>
 <body>
     <div class="container">
-	
-        <p><img src="logo.gif" alt="Your Logo"></p>
+        <div class="left-content">
+            <p><img src="logo.gif" alt="Your Logo"></p>
 
-        <h3>NOAA Information</h3>
-        <p><strong>City Name:</strong> $currentcity</p>
-        <p><strong>Condition:</strong> $currentcondition</p>
-        <p><strong>Current Temp:</strong> $currenttemp°F</p>
-        <p><strong>Radar Station:</strong> $currentstation</p>
-<table border="1">
-		<img src="radar.gif" alt="Radar">
-</table>
-        <p>$currentcond</p>
+            <h3><center>NOAA Information</center></h3>
+            <p><strong><center>City Name:</strong> $currentcity</center></p>
+            <p><strong><center>Condition:</strong> $currentcondition</center></p>
+            <p><strong><center>Current Temp:</strong> $currenttemp°F</center></p>
+            <p><strong><center>Radar Station:</strong> $currentstation</center></p>
+            <img src="radar.gif" alt="Radar">
+            <p><center>$currentcond</center></p>
+        </div>
 
-        <h2><p style="margin-top: 40px;">Hourly Forecast</p></h2>
-<table border="1">
+        <div class="table-container">
+            <h2>Hourly Forecast</h2>
+            <table border="1">
     <tr>
         <th>Local Time</th>
         <th>Temperature</th>
