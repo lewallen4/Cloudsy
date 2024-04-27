@@ -51,9 +51,7 @@ else
 	osVer="windows"
 fi
 
-
 # The Error Zone : Fun stuff
-
 Error_time() {
     random_number=$((RANDOM % 2))  # Generate a random number between 0 and 1
     case $random_number in
@@ -109,15 +107,122 @@ Error_time() {
 }
 
 
+cat <<EOF >db/frontEnd.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
+            background-color: lightgray;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            border: 5px solid white;
+            padding: 20px;
+            border-radius: 10px;
+            overflow: auto;
+        }
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            margin-bottom: 20px;
+        }
+        .left-content {
+            display: inline-block;
+            text-align: left;
+            vertical-align: top; /* Align content at the top */
+            width: 45%; /* Adjust the width as needed */
+            margin-right: 5%; /* Add some margin between the left and right content */
+        }
+        .table-container {
+            display: inline-block;
+            text-align: center;
+            width: 45%; /* Adjust the width as needed */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            background: linear-gradient(45deg, #e4b5d9, #abd4f2);
+        }
+
+        th,
+        td {
+            padding: 10px;
+            background-color: rgba(255,255,255,0.2);
+            color: #000;
+        }
+
+        th {
+            text-align: left;
+            background-color: rgba(255,255,255,0.6);
+            background: linear-gradient(45deg, #e4b5d9, #abd4f2);
+        }
+
+        thead th {
+            background-color: #55608f;
+        }
+
+        tbody tr:hover {
+            background-color: rgba(255,255,255,0.3);
+        }
+
+        td {
+            position: relative;
+        }
+
+        td:hover:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -9999px;
+            bottom: -9999px;
+            background-color: rgba(255,255,255,0.2);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+	<div class="container">
+	<p><img src="loading.gif" alt="Loading, please wait"></p>
+	</div>
+	<!-- JavaScript to refresh the page every 10 minutes -->
+    <script>
+        setTimeout(function(){
+            location.reload();
+        }, 6000); // Refresh every 10 minutes (600,000 milliseconds)
+    </script>
+</body>
+</html>
+
+
+EOF
 
 
 
-
-
-
-
-
-
+# window launching
+html_file="db/frontEnd.html"
+	if [ $osVer == "linux" ]; then
+	xdg-open "$html_file"
+	fi
+	
+	if [ $osVer == "windows" ]; then
+    powershell -Command "Start-Process -FilePath 'db/frontEnd.html' -WindowStyle Normal"
+	fi
 
 
 
@@ -133,6 +238,17 @@ Error_time() {
 # Main loop indefinitely
 while true; do
 
+	#cleanup from loop
+	
+	
+	
+
+
+
+
+
+
+
     # Info pulling
 	echo "		Generating..."
 	echo "			Please wait"
@@ -147,8 +263,6 @@ while true; do
     Error_time
 	exit
 	fi
-	
-	
 
     curl -s "https://radar.weather.gov/ridge/standard/${currentstation}_loop.gif" > db/radar.gif
 	sevenday=$(cat "db/stationlookup.json" | grep '"forecast"' | awk -F'"' '{print $4}')
@@ -274,6 +388,35 @@ hour=$hourRawTime24a
 hourTime24=$(convert_to_12_hour_format "$hour")
 hour=$hourRawTime25a
 hourTime25=$(convert_to_12_hour_format "$hour")
+
+
+# 7 day forecast staging
+# Convert to american
+weeklyDate1=$(cat db/7day.json | grep generatedAt | awk -F '"' '{print $4}' | awk -F ':' '{print $1}' | awk -F 'T' '{print $1}' | awk -F '-' '{print $1}')
+weeklyDate2=$(cat db/7day.json | grep generatedAt | awk -F '"' '{print $4}' | awk -F ':' '{print $1}' | awk -F 'T' '{print $1}' | awk -F '-' '{print $2}')
+weeklyDate3=$(cat db/7day.json | grep generatedAt | awk -F '"' '{print $4}' | awk -F ':' '{print $1}' | awk -F 'T' '{print $1}' | awk -F '-' '{print $3}')
+weeklyDateFinal=$(echo $weeklyDate2-$weeklyDate3-$weeklyDate1)
+
+
+
+# save for later cat 7day.json | grep name | grep -v 'night' | grep -v "Night"
+# use this for days if you forgot where you are
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Write HTML content to a file
     cat <<EOF >db/frontEndraw.html
@@ -515,6 +658,12 @@ hourTime25=$(convert_to_12_hour_format "$hour")
 </table>
         </div>
     </div>
+	<!-- JavaScript to refresh the page every 10 minutes -->
+    <script>
+        setTimeout(function(){
+            location.reload();
+        }, 610000); // Refresh every 10 minutes (600,000 milliseconds)
+    </script>
 </body>
 </html>
 
@@ -525,16 +674,7 @@ EOF
 awk '{if (gsub("Cloudy", "Cloudsy")) print; else print $0}' db/frontEndraw.html > db/frontEnd1.html
 awk '{if (gsub("cloudy", "cloudsy")) print; else print $0}' db/frontEnd1.html > db/frontEnd.html
 
-# Function to open a OS specific Browser
-html_file="db/frontEnd.html"
-# window launching
-	if [ $osVer == "linux" ]; then
-	xdg-open "$html_file"
-	fi
-	
-	if [ $osVer == "windows" ]; then
-    powershell -Command "Start-Process -FilePath 'db/frontEnd.html' -WindowStyle Normal"
-	fi
+
 
 # cleanup
 rm db/frontEndraw.html
