@@ -397,6 +397,17 @@ for ((i=1; i<=14; i++)); do
     cat 'db/weekly/long.txt' | awk -F 'number' -v var="$i" '{print $var}' | awk '{ gsub(/,/, ",\n"); print }' > "db/weekly/$i.txt"
 done
 
+directory="db/weekly"
+rm db/weekly/1.txt
+# Loop through each file in the directory
+for file in "$directory"/*; do
+    # Check if the file contains the word "night"
+    if grep -q "night" "$file"; then
+        # If the word is found, delete the file
+        rm "$file"
+    fi
+done
+
 
 
 
