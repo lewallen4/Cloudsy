@@ -56,7 +56,7 @@ Error_time() {
     random_number=$((RANDOM % 2))  # Generate a random number between 0 and 1
     case $random_number in
         0)
-            echo "
+            echo " error pulling data from NOAA
  █     █░ ██░ ██  ▒█████   ▒█████   ██▓███    ██████                            
 ▓█░ █ ░█░▓██░ ██▒▒██▒  ██▒▒██▒  ██▒▓██░  ██▒▒██    ▒                            
 ▒█░ █ ░█ ▒██▀▀██░▒██░  ██▒▒██░  ██▒▓██░ ██▓▒░ ▓██▄                              
@@ -74,39 +74,39 @@ Error_time() {
 ░ ▒░   ▒ ▒ ░ ▒░▒░▒░    ░ ▓░▒ ▒  ░░ ▒░ ░▒▒   ▓▒█░ ▒ ░░    ▒ ░░▒░▒░░ ▒░ ░░ ▒▓ ░▒▓░
 ░ ░░   ░ ▒░  ░ ▒ ▒░      ▒ ░ ░   ░ ░  ░ ▒   ▒▒ ░   ░     ▒ ░▒░ ░ ░ ░  ░  ░▒ ░ ▒░
    ░   ░ ░ ░ ░ ░ ▒       ░   ░     ░    ░   ▒    ░       ░  ░░ ░   ░     ░░   ░ 
-       ░   an  ░ ░  error  ░   has ░  ░     ░  ░ occurred░  ░  ░   ░  ░   ░     "
+       ░   an  ░ ░  error  ░   has ░  ░     ░  ░ occurred░  ░  ░   ░  ░   ░     " && echo "error pulling data from NOAA" > 'db/frontEnd.html'
 	
             ;;
         1)
-            echo "
+            echo " error pulling data from NOAA
  _____                                            _____ 
 ( ___ )                                          ( ___ )
  |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | 
  |   |                                            |   | 
- |   |  |w|e|l|l|   |t|h|a|t|s|   |b|a|d|         |   | 
+ |   |   w e l l     t h a t s     b a d          |   | 
  |   |                                            |   | 
- |   |        |t|h|e| |w|e|a|t|h|e|r| |b|r|o|k|e| |   | 
+ |   |         the   weather   broke              |   | 
  |   |                                            |   | 
- |   |      |e|i|t|h|e|r| |t|h|e|r|e|s|           |   | 
- |   |  +=+=+=+=+=+=+=+=+=+=+-+=+=+=+=+=+=+=+=+   |   | 
- |   | ||C|O|N|N|E|C|T|I|O|N| |P|R|O|B|L|E|M|S||  |   | 
- |   |  +=+=+=+=+=+=+=+=+=+=+ +=+=+=+=+=+=+=+=+   |   | 
- |   |                  |o|r|                     |   | 
+ |   |                 either   theres            |   | 
  |   |                                            |   | 
- |   |   ||s|o|m|e|o|n|e| |d|e|s|t|r|o|y|e|d||    |   | 
- |   |  +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+   |   | 
- |   | ||T|H|E| |W|E|A|T|H|E|R| |S|E|R|V|I|C|E||  |   | 
- |   |  +-+-+-+ +-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+   |   | 
+ |   |   C O N N E C T I O N   P R O B L E M S    |   | 
+ |   |                                            |   | 
+ |   |                    or                      |   | 
+ |   |                                            |   | 
+ |   |     s o m e o n e   d e s t r o y e d      |   | 
+ |   |                                            |   | 
+ |   |   T H E   W E A T H E R   S E R V I C E    |   | 
+ |   |                                            |   | 
  |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| 
-(_____)      error fetching data                 (_____)"
+(_____)      error fetching data                 (_____)" && echo "error pulling data from NOAA" > 'db/frontEnd.html'
             ;;
         *)
-            echo "Unknown error"
+            echo "Unknown error" && echo "error pulling data from NOAA" > 'db/frontEnd.html'
             ;;
     esac
 }
 
-
+# The Loading Screen
 cat <<EOF >db/frontEnd.html
 <!DOCTYPE html>
 <html lang="en">
@@ -212,9 +212,7 @@ cat <<EOF >db/frontEnd.html
 
 EOF
 
-
-
-# window launching
+# open the loading screen on different OS
 html_file="db/frontEnd.html"
 	if [ $osVer == "linux" ]; then
 	xdg-open "$html_file"
@@ -224,30 +222,8 @@ html_file="db/frontEnd.html"
     powershell -Command "Start-Process -FilePath 'db/frontEnd.html' -WindowStyle Normal"
 	fi
 
-
-
-
-
-
-
-
-
-
-
-
 # Main loop indefinitely
 while true; do
-
-	#cleanup from loop
-	
-	
-	
-
-
-
-
-
-
 
     # Info pulling
 	echo "		Generating..."
@@ -265,6 +241,10 @@ while true; do
 	fi
 
     curl -s "https://radar.weather.gov/ridge/standard/${currentstation}_loop.gif" > db/radar.gif
+	curl -s "https://api.weather.gov/alerts?point=${currentlat},${currentlon}" > db/alerts.json
+	currentzone=$(grep forecastZone db/stationlookup.json | awk -F '"' '{print $4}' | awk -F '/' '{print $6}')
+	alert1=$(grep "/$currentzone" db/alerts.json)
+	tac db/alerts.json | grep -A 1000 "$alert" | grep '"headline"' > db/activealerts.json
 	sevenday=$(cat "db/stationlookup.json" | grep '"forecast"' | awk -F'"' '{print $4}')
 	curl -s "$sevenday" > db/7day.json
 	#	You now have 3 assets
@@ -389,7 +369,6 @@ hourTime24=$(convert_to_12_hour_format "$hour")
 hour=$hourRawTime25a
 hourTime25=$(convert_to_12_hour_format "$hour")
 
-
 # 7 day forecast staging
 # Convert to american
 weeklyDate1=$(cat db/7day.json | grep generatedAt | awk -F '"' '{print $4}' | awk -F ':' '{print $1}' | awk -F 'T' '{print $1}' | awk -F '-' '{print $1}')
@@ -399,15 +378,29 @@ weeklyDateFinal=$(echo $weeklyDate2-$weeklyDate3-$weeklyDate1)
 
 
 
+
+
+
 # save for later cat 7day.json | grep name | grep -v 'night' | grep -v "Night"
 # use this for days if you forgot where you are
 
+#weeklyDay1=$()
+#for i in {1..25}; do
+#	eval weeklyDaylabel${i}a=$(cat db/7day.json | grep name | grep -v 'night' | grep -v "Night" | awk -F '"' '{print $4}')
+#done
+#for i in {1..25}; do
+#	eval weathersplit${i}a=$(cat 7day.json | awk -F 'number' '{print ${i}')
+#	
+#	| grep -v 'night' | grep -v "Night" | awk -F '"' '{print $4}' | grep shortForecast | awk -F '"' '{print $4}')
+awk '{printf "%s", $0}' "db/7day.json" > db/weekly/long.txt
+for ((i=1; i<=14; i++)); do
+    cat 'db/weekly/long.txt' | awk -F 'number' -v var="$i" '{print $var}' | awk '{ gsub(/,/, ",\n"); print }' > "db/weekly/$i.txt"
+done
 
 
 
 
-
-
+# thats the wildness
 
 
 
@@ -673,8 +666,6 @@ EOF
 # fix the words
 awk '{if (gsub("Cloudy", "Cloudsy")) print; else print $0}' db/frontEndraw.html > db/frontEnd1.html
 awk '{if (gsub("cloudy", "cloudsy")) print; else print $0}' db/frontEnd1.html > db/frontEnd.html
-
-
 
 # cleanup
 rm db/frontEndraw.html
