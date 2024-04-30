@@ -573,41 +573,41 @@ done
                     </tbody>
             </table>
             <table>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>$weeklyName2<br></th>
-                        <th>$weeklyTemp2</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2" rowspan="4">$weeklyLong2</td>
-                    </tr>
+                <table border="1">
+                    <thead>
                         <tr>
-                    </tr>
+                            <th>$weeklyName2<br></th>
+                            <th>$weeklyTemp2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         <tr>
-                    </tr>
-                </tbody>
-            </table>
+                            <td colspan="2" rowspan="4">$weeklyLong2</td>
+                        </tr>
+                            <tr>
+                        </tr>
+                            <tr>
+                        </tr>
+                    </tbody>
+                </table>
             <table>
                 <table border="1">
-                <thead>
-                    <tr>
-                        <th>$weeklyName3<br></th>
-                        <th>$weeklyTemp3</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2" rowspan="4">$weeklyLong3</td>
-                    </tr>
-                    <tr>
-                    </tr>
-                    <tr>
-                    </tr>
-                </tbody>
-            </table>
+                    <thead>
+                        <tr>
+                            <th>$weeklyName3<br></th>
+                            <th>$weeklyTemp3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" rowspan="4">$weeklyLong3</td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
             <table>
                 <table border="1">
                     <thead>
@@ -625,7 +625,7 @@ done
                     <tr>
                     </tr>
                 </tbody>
-            </table>
+                </table>
             <table>
                 <table border="1">
                     <thead>
@@ -643,21 +643,21 @@ done
                         <tr>
                         </tr>
                     </tbody>
-            </table>
+                </table>
             <table>
-            <table border="1">
-                <tr>
-                    <th>$weeklyName6<br></th>
-                    <th>$weeklyTemp6</th>
-                </tr>
-                <tr>
-                    <td colspan="2" rowspan="4">$weeklyLong6</td>
-                </tr>
-                <tr>
-                </tr>
-                <tr>
-                </tr>
-            </table>
+                <table border="1">
+                    <tr>
+                        <th>$weeklyName6<br></th>
+                        <th>$weeklyTemp6</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2" rowspan="4">$weeklyLong6</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <tr>
+                    </tr>
+                </table>
     </div>
     <div class="left-content third">
         <p><img src="logo.gif" alt="Your Logo"></p>
