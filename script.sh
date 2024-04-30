@@ -376,40 +376,74 @@ weeklyDate2=$(cat db/7day.json | grep generatedAt | awk -F '"' '{print $4}' | aw
 weeklyDate3=$(cat db/7day.json | grep generatedAt | awk -F '"' '{print $4}' | awk -F ':' '{print $1}' | awk -F 'T' '{print $1}' | awk -F '-' '{print $3}')
 weeklyDateFinal=$(echo $weeklyDate2-$weeklyDate3-$weeklyDate1)
 
-
-
-
-
-
-# save for later cat 7day.json | grep name | grep -v 'night' | grep -v "Night"
-# use this for days if you forgot where you are
-
-#weeklyDay1=$()
-#for i in {1..25}; do
-#	eval weeklyDaylabel${i}a=$(cat db/7day.json | grep name | grep -v 'night' | grep -v "Night" | awk -F '"' '{print $4}')
-#done
-#for i in {1..25}; do
-#	eval weathersplit${i}a=$(cat 7day.json | awk -F 'number' '{print ${i}')
-#	
-#	| grep -v 'night' | grep -v "Night" | awk -F '"' '{print $4}' | grep shortForecast | awk -F '"' '{print $4}')
+# weekly section
 awk '{printf "%s", $0}' "db/7day.json" > db/weekly/long.txt
+counter=100
 for ((i=1; i<=14; i++)); do
-    cat 'db/weekly/long.txt' | awk -F 'number' -v var="$i" '{print $var}' | awk '{ gsub(/,/, ",\n"); print }' > "db/weekly/$i.txt"
+	((counter++))
+	
+    cat 'db/weekly/long.txt' | awk -F 'number' -v var="$i" '{print $var}' | awk '{ gsub(/,/, ",\n"); print }' > "db/weekly/$counter.txt"
 done
 
 directory="db/weekly"
-rm db/weekly/1.txt
-# Loop through each file in the directory
+rm db/weekly/101.txt
 for file in "$directory"/*; do
-    # Check if the file contains the word "night"
     if grep -q "night" "$file"; then
-        # If the word is found, delete the file
         rm "$file"
     fi
 done
-
-
-
+for file in "$directory"/*; do
+    if grep -q "name.*This\|This.*name" "$file"; then
+        rm "$file"
+    fi
+done
+# Initialize counter
+counter=0
+for file in "$directory"/*; do
+    ((counter++))
+    
+    content=$(grep -i "name" "$file" | awk -F '"' '{print $4}')
+    
+    declare "weeklyName$counter=$content"
+done
+for ((i = 1; i <= counter; i++)); do
+    var="weeklyName$i"
+done
+counter=0
+for file in "$directory"/*; do
+    ((counter++))
+    
+    content=$(grep -i "shortForecast" "$file" | awk -F '"' '{print $4}')
+    
+    declare "weeklyShort$counter=$content"
+done
+for ((i = 1; i <= counter; i++)); do
+    var="weeklyShort$i"
+done
+counter=0
+for file in "$directory"/*; do
+    ((counter++))
+    
+    content=$(grep -A 10 -i "detailedForecast" "$file" | sed ':a;N;$!ba;s/\n//g' | awk -F '"' '{print $4}'
+)
+    
+    declare "weeklyLong$counter=$content"
+done
+for ((i = 1; i <= counter; i++)); do
+    var="weeklyLong$i"
+done
+counter=0
+for file in "$directory"/*; do
+    ((counter++))
+    
+    content=$(grep -i '"temperature"' "$file" | awk -F ':' '{print $2}' | awk -F ' ' '{print $1}'| awk -F ',' '{print $1}'
+)
+    
+    declare "weeklyTemp$counter=$content"
+done
+for ((i = 1; i <= counter; i++)); do
+    var="weeklyTemp$i"
+done
 
 # thats the wildness
 
@@ -455,15 +489,16 @@ done
         }
         .left-content {
             display: inline-block;
-            text-align: left;
+            text-align: center;
             vertical-align: top; /* Align content at the top */
-            width: 45%; /* Adjust the width as needed */
-            margin-right: 5%; /* Add some margin between the left and right content */
+            width: 20%; /* Adjust the width as needed */
+            margin-right: 1%; /* Add some margin between the left and right content */
+			margin-left: 1%; /* Add some margin between the left and right content */
         }
         .table-container {
             display: inline-block;
             text-align: center;
-            width: 45%; /* Adjust the width as needed */
+            width: 20%; /* Adjust the width as needed */
         }
 
         table {
@@ -514,6 +549,116 @@ done
 </head>
 <body>
     <div class="container">
+	<div class="table-container">
+	<h2>Weekly Forecast</h2>
+<table>
+<table border="1">
+<thead>
+  <tr>
+    <th>$weeklyName1<br></th>
+    <th>$weeklyTemp1</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td colspan="2" rowspan="4">$weeklyLong1</td>
+  </tr>
+    <tr>
+  </tr>
+    <tr>
+  </tr>
+</tbody>
+</table>
+<table>
+<table border="1">
+<thead>
+  <tr>
+    <th>$weeklyName2<br></th>
+    <th>$weeklyTemp2</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td colspan="2" rowspan="4">$weeklyLong2</td>
+  </tr>
+    <tr>
+  </tr>
+    <tr>
+  </tr>
+</tbody>
+</table>
+<table>
+<table border="1">
+<thead>
+  <tr>
+    <th>$weeklyName3<br></th>
+    <th>$weeklyTemp3</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td colspan="2" rowspan="4">$weeklyLong3</td>
+  </tr>
+    <tr>
+  </tr>
+    <tr>
+  </tr>
+</tbody>
+</table>
+<table>
+<table border="1">
+<thead>
+  <tr>
+    <th>$weeklyName4<br></th>
+    <th>$weeklyTemp4</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td colspan="2" rowspan="4">$weeklyLong4</td>
+  </tr>
+    <tr>
+  </tr>
+    <tr>
+  </tr>
+</tbody>
+</table>
+<table>
+<table border="1">
+<thead>
+  <tr>
+    <th>$weeklyName5<br></th>
+    <th>$weeklyTemp5</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td colspan="2" rowspan="4">$weeklyLong5</td>
+  </tr>
+    <tr>
+  </tr>
+    <tr>
+  </tr>
+</tbody>
+</table>
+<table>
+<table border="1">
+
+  <tr>
+    <th>$weeklyName6<br></th>
+    <th>$weeklyTemp6</th>
+  </tr>
+
+
+  <tr>
+    <td colspan="2" rowspan="4">$weeklyLong6</td>
+  </tr>
+    <tr>
+  </tr>
+    <tr>
+  </tr>
+</table>
+</div>
         <div class="left-content">
             <p><img src="logo.gif" alt="Your Logo"></p>
 
