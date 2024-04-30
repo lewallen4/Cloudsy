@@ -378,7 +378,7 @@ weeklyDate2=$(cat db/7day.json | grep generatedAt | awk -F '"' '{print $4}' | aw
 weeklyDate3=$(cat db/7day.json | grep generatedAt | awk -F '"' '{print $4}' | awk -F ':' '{print $1}' | awk -F 'T' '{print $1}' | awk -F '-' '{print $3}')
 weeklyDateFinal=$(echo $weeklyDate2-$weeklyDate3-$weeklyDate1)
 
-# weekly section
+# weekly section / Orobas loop
 awk '{printf "%s", $0}' "db/7day.json" > db/weekly/long.txt
 counter=100
 for ((i=1; i<=14; i++)); do
