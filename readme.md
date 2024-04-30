@@ -33,7 +33,7 @@ Cloudsy is a simple command-line weather application that fetches weather data f
 
 <b>License</b>
 
-The zip code data (uszips.csv) included in this project is sourced from public domain data and is subject to its own license. All weather data fetched from NOAA and the National Weather Service belong to their respective owners and are used in compliance with their terms of service.
+The zip code data (uszips.csv) included in this project is sourced from public domain data and is subject to its own license (included in folder). All weather data fetched from NOAA and the National Weather Service belong to their respective owners and are used in compliance with their terms of service.
 
 
 <b>Disclaimer</b>
