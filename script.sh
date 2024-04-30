@@ -51,6 +51,8 @@ else
 	osVer="windows"
 fi
 
+mkdir -p "db/weekly"
+
 # The Error Zone : Fun stuff
 Error_time() {
     random_number=$((RANDOM % 2))  # Generate a random number between 0 and 1
@@ -496,9 +498,9 @@ done
             display: inline-block;
             text-align: center;
             vertical-align: top; /* Align content at the top */
-            width: 20%; /* Adjust the width as needed */
-            margin-right: 1%; /* Add some margin between the left and right content */
-			margin-left: 1%; /* Add some margin between the left and right content */
+            width: 40%; /* Adjust the width as needed */
+            margin-right: 3%; /* Add some margin between the left and right content */
+			margin-left: 3%; /* Add some margin between the left and right content */
         }
         .table-container {
             text-align: center;
@@ -551,113 +553,60 @@ done
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="table-container third">
-            <h2>Weekly Forecast</h2>
-            <table>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>$weeklyName1<br></th>
-                            <th>$weeklyTemp1</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="2" rowspan="4">$weeklyLong1</td>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                        </tr>
-                    </tbody>
-            </table>
-            <table>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>$weeklyName2<br></th>
-                            <th>$weeklyTemp2</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="2" rowspan="4">$weeklyLong2</td>
-                        </tr>
-                            <tr>
-                        </tr>
-                            <tr>
-                        </tr>
-                    </tbody>
-                </table>
-            <table>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>$weeklyName3<br></th>
-                            <th>$weeklyTemp3</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="2" rowspan="4">$weeklyLong3</td>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                        </tr>
-                    </tbody>
-                </table>
-            <table>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>$weeklyName4<br></th>
-                            <th>$weeklyTemp4</th>
-                        </tr>
-                    </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2" rowspan="4">$weeklyLong4</td>
-                    </tr>
-                    <tr>
-                    </tr>
-                    <tr>
-                    </tr>
-                </tbody>
-                </table>
-            <table>
-                <table border="1">
-                    <thead>
-                    <tr>
-                        <th>$weeklyName5<br></th>
-                        <th>$weeklyTemp5</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="2" rowspan="4">$weeklyLong5</td>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                        </tr>
-                    </tbody>
-                </table>
-            <table>
-                <table border="1">
-                    <tr>
-                        <th>$weeklyName6<br></th>
-                        <th>$weeklyTemp6</th>
-                    </tr>
-                    <tr>
-                        <td colspan="2" rowspan="4">$weeklyLong6</td>
-                    </tr>
-                    <tr>
-                    </tr>
-                    <tr>
-                    </tr>
-                </table>
+	<div class="container">
+    <div class="table-container third">
+        <h2>Weekly Forecast</h2>
+        <table border="1" style="width: 400px;">
+            <tr>
+                <th>$weeklyName1</th>
+                <th style="text-align: right; font-weight: normal;">$weeklyTemp1°F</th>
+            </tr>
+            <tr style="height:100px">
+                <td colspan="2" style="text-align: left;">$weeklyLong1</td>
+            </tr>
+            <tr>
+                <th>$weeklyName2</th>
+                <th style="text-align: right; font-weight: normal;">$weeklyTemp2°F</th>
+            </tr>
+            <tr style="height:100px">
+                <td colspan="2" style="text-align: left;">$weeklyLong2</td>
+            </tr>
+            <tr>
+                <th>$weeklyName3</th>
+                <th style="text-align: right; font-weight: normal;">$weeklyTemp3°F</th>
+            </tr>
+            <tr style="height:100px">
+                <td colspan="2" style="text-align: left;">$weeklyLong3</td>
+            </tr>
+            <tr>
+                <th>$weeklyName4</th>
+                <th style="text-align: right; font-weight: normal;">$weeklyTemp4°F</th>
+            </tr>
+            <tr style="height:100px">
+                <td colspan="2" style="text-align: left;">$weeklyLong4</td>
+            </tr>
+            <tr>
+                <th>$weeklyName5</th>
+                <th style="text-align: right; font-weight: normal;">$weeklyTemp5°F</th>
+            </tr>
+            <tr style="height:100px">
+                <td colspan="2" style="text-align: left;">$weeklyLong5</td>
+            </tr>
+            <tr>
+                <th>$weeklyName6</th>
+                <th style="text-align: right; font-weight: normal;">$weeklyTemp6°F</th>
+            </tr>
+            <tr style="height:100px">
+                <td colspan="2" style="text-align: left;">$weeklyLong6</td>
+            </tr>
+            <tr>
+                <th>$weeklyName7</th>
+                <th style="text-align: right; font-weight: normal;">$weeklyTemp7°F</th>
+            </tr>
+             <tr style="height:100px">
+                <td colspan="2" style="text-align: left;">$weeklyLong7</td>
+            </tr>
+        </table>
     </div>
     <div class="left-content third">
         <p><img src="logo.gif" alt="Your Logo"></p>
