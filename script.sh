@@ -475,12 +475,17 @@ done
             background-color: lightgray;
         }
         .container {
-            text-align: center;
             background-color: white;
             border: 5px solid white;
             padding: 20px;
             border-radius: 10px;
             overflow: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .third {
+          width: 33%;
         }
         img {
             max-width: 100%;
@@ -496,9 +501,7 @@ done
 			margin-left: 1%; /* Add some margin between the left and right content */
         }
         .table-container {
-            display: inline-block;
             text-align: center;
-            width: 20%; /* Adjust the width as needed */
         }
 
         table {
@@ -549,7 +552,7 @@ done
 </head>
 <body>
     <div class="container">
-	<div class="table-container">
+	<div class="table-container third">
 	<h2>Weekly Forecast</h2>
 <table>
 <table border="1">
@@ -659,7 +662,7 @@ done
   </tr>
 </table>
 </div>
-        <div class="left-content">
+        <div class="left-content third">
             <p><img src="logo.gif" alt="Your Logo"></p>
 
             <h3><center>NOAA Information</center></h3>
@@ -671,7 +674,7 @@ done
             <p><center>$currentcond</center></p>
         </div>
 
-        <div class="table-container">
+        <div class="table-container third">
             <h2>Hourly Forecast</h2>
             <table border="1">
     <tr>
