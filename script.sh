@@ -395,6 +395,11 @@ for file in "$directory"/*; do
     fi
 done
 for file in "$directory"/*; do
+    if grep -q "Today" "$file"; then
+        rm "$file"
+    fi
+done
+for file in "$directory"/*; do
     if grep -q "name.*This\|This.*name" "$file"; then
         rm "$file"
     fi
@@ -599,13 +604,6 @@ done
             <tr style="height:100px">
                 <td colspan="2" style="text-align: left;">$weeklyLong6</td>
             </tr>
-            <tr>
-                <th>$weeklyName7</th>
-                <th style="text-align: right; font-weight: normal;">$weeklyTemp7°F</th>
-            </tr>
-             <tr style="height:100px">
-                <td colspan="2" style="text-align: left;">$weeklyLong7</td>
-            </tr>
         </table>
     </div>
     <div class="left-content third">
@@ -617,7 +615,7 @@ done
         <p><strong><center>Current Temp:</strong> $currenttemp°F</center></p>
         <p><strong><center>Radar Station:</strong> $currentstation</center></p>
         <img src="radar.gif" alt="Radar">
-        <p><center>$currentcond</center></p>
+        <p style="max-width: 400px; margin: 0 auto; text-align: center;">$currentcond</center></p>
     </div>
 
     <div class="table-container third">
