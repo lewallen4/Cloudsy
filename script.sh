@@ -552,270 +552,267 @@ done
 </head>
 <body>
     <div class="container">
-	<div class="table-container third">
-	<h2>Weekly Forecast</h2>
-<table>
-<table border="1">
-<thead>
-  <tr>
-    <th>$weeklyName1<br></th>
-    <th>$weeklyTemp1</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td colspan="2" rowspan="4">$weeklyLong1</td>
-  </tr>
-    <tr>
-  </tr>
-    <tr>
-  </tr>
-</tbody>
-</table>
-<table>
-<table border="1">
-<thead>
-  <tr>
-    <th>$weeklyName2<br></th>
-    <th>$weeklyTemp2</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td colspan="2" rowspan="4">$weeklyLong2</td>
-  </tr>
-    <tr>
-  </tr>
-    <tr>
-  </tr>
-</tbody>
-</table>
-<table>
-<table border="1">
-<thead>
-  <tr>
-    <th>$weeklyName3<br></th>
-    <th>$weeklyTemp3</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td colspan="2" rowspan="4">$weeklyLong3</td>
-  </tr>
-    <tr>
-  </tr>
-    <tr>
-  </tr>
-</tbody>
-</table>
-<table>
-<table border="1">
-<thead>
-  <tr>
-    <th>$weeklyName4<br></th>
-    <th>$weeklyTemp4</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td colspan="2" rowspan="4">$weeklyLong4</td>
-  </tr>
-    <tr>
-  </tr>
-    <tr>
-  </tr>
-</tbody>
-</table>
-<table>
-<table border="1">
-<thead>
-  <tr>
-    <th>$weeklyName5<br></th>
-    <th>$weeklyTemp5</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td colspan="2" rowspan="4">$weeklyLong5</td>
-  </tr>
-    <tr>
-  </tr>
-    <tr>
-  </tr>
-</tbody>
-</table>
-<table>
-<table border="1">
-
-  <tr>
-    <th>$weeklyName6<br></th>
-    <th>$weeklyTemp6</th>
-  </tr>
-
-
-  <tr>
-    <td colspan="2" rowspan="4">$weeklyLong6</td>
-  </tr>
-    <tr>
-  </tr>
-    <tr>
-  </tr>
-</table>
-</div>
-        <div class="left-content third">
-            <p><img src="logo.gif" alt="Your Logo"></p>
-
-            <h3><center>NOAA Information</center></h3>
-            <p><strong><center>City Name:</strong> $currentcity</center></p>
-            <p><strong><center>Condition:</strong> $currentcondition</center></p>
-            <p><strong><center>Current Temp:</strong> $currenttemp°F</center></p>
-            <p><strong><center>Radar Station:</strong> $currentstation</center></p>
-            <img src="radar.gif" alt="Radar">
-            <p><center>$currentcond</center></p>
-        </div>
-
         <div class="table-container third">
-            <h2>Hourly Forecast</h2>
-            <table border="1">
-    <tr>
-        <th>Local Time</th>
-        <th>Temperature</th>
-        <th>Change of Rain</th>
-    </tr>
-    <tr>
-        <td>$hourTime1</td>
-        <td>$hourTemp1a°F</td>
-        <td>$hourRain1a%</td>
-    </tr>
-    <tr>
-        <td>$hourTime2</td>
-        <td>$hourTemp2a°F</td>
-        <td>$hourRain2a%</td>
-    </tr>
-    <tr>
-        <td>$hourTime3</td>
-        <td>$hourTemp3a°F</td>
-        <td>$hourRain3a%</td>
-    </tr>
-    <tr>
-        <td>$hourTime4</td>
-        <td>$hourTemp4a°F</td>
-        <td>$hourRain4a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime5</td>
-        <td>$hourTemp5a°F</td>
-        <td>$hourRain5a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime6</td>
-        <td>$hourTemp6a°F</td>
-        <td>$hourRain6a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime7</td>
-        <td>$hourTemp7a°F</td>
-        <td>$hourRain7a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime8</td>
-        <td>$hourTemp8a°F</td>
-        <td>$hourRain8a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime9</td>
-        <td>$hourTemp9a°F</td>
-        <td>$hourRain9a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime10</td>
-        <td>$hourTemp10a°F</td>
-        <td>$hourRain10a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime11</td>
-        <td>$hourTemp11a°F</td>
-        <td>$hourRain11a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime12</td>
-        <td>$hourTemp12a°F</td>
-        <td>$hourRain12a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime13</td>
-        <td>$hourTemp13a°F</td>
-        <td>$hourRain13a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime14</td>
-        <td>$hourTemp14a°F</td>
-        <td>$hourRain14a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime15</td>
-        <td>$hourTemp15a°F</td>
-        <td>$hourRain15a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime16</td>
-        <td>$hourTemp16a°F</td>
-        <td>$hourRain16a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime17</td>
-        <td>$hourTemp17a°F</td>
-        <td>$hourRain17a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime18</td>
-        <td>$hourTemp18a°F</td>
-        <td>$hourRain18a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime19</td>
-        <td>$hourTemp19a°F</td>
-        <td>$hourRain19a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime20</td>
-        <td>$hourTemp20a°F</td>
-        <td>$hourRain20a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime21</td>
-        <td>$hourTemp21a°F</td>
-        <td>$hourRain21a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime22</td>
-        <td>$hourTemp22a°F</td>
-        <td>$hourRain22a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime23</td>
-        <td>$hourTemp23a°F</td>
-        <td>$hourRain23a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime24</td>
-        <td>$hourTemp24a°F</td>
-        <td>$hourRain24a%</td>
-    </tr>
-	    <tr>
-        <td>$hourTime25</td>
-        <td>$hourTemp25a°F</td>
-        <td>$hourRain25a%</td>
-    </tr>
-</table>
-        </div>
+            <h2>Weekly Forecast</h2>
+            <table>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>$weeklyName1<br></th>
+                            <th>$weeklyTemp1</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" rowspan="4">$weeklyLong1</td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        <tr>
+                        </tr>
+                    </tbody>
+            </table>
+            <table>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>$weeklyName2<br></th>
+                            <th>$weeklyTemp2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" rowspan="4">$weeklyLong2</td>
+                        </tr>
+                            <tr>
+                        </tr>
+                            <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            <table>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>$weeklyName3<br></th>
+                            <th>$weeklyTemp3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" rowspan="4">$weeklyLong3</td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            <table>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>$weeklyName4<br></th>
+                            <th>$weeklyTemp4</th>
+                        </tr>
+                    </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2" rowspan="4">$weeklyLong4</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <tr>
+                    </tr>
+                </tbody>
+                </table>
+            <table>
+                <table border="1">
+                    <thead>
+                    <tr>
+                        <th>$weeklyName5<br></th>
+                        <th>$weeklyTemp5</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" rowspan="4">$weeklyLong5</td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            <table>
+                <table border="1">
+                    <tr>
+                        <th>$weeklyName6<br></th>
+                        <th>$weeklyTemp6</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2" rowspan="4">$weeklyLong6</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <tr>
+                    </tr>
+                </table>
     </div>
-	<!-- JavaScript to refresh the page every 10 minutes -->
-    <script>
-        setTimeout(function(){
-            location.reload();
-        }, 610000); // Refresh every 10 minutes (600,000 milliseconds)
-    </script>
+    <div class="left-content third">
+        <p><img src="logo.gif" alt="Your Logo"></p>
+
+        <h3><center>NOAA Information</center></h3>
+        <p><strong><center>City Name:</strong> $currentcity</center></p>
+        <p><strong><center>Condition:</strong> $currentcondition</center></p>
+        <p><strong><center>Current Temp:</strong> $currenttemp°F</center></p>
+        <p><strong><center>Radar Station:</strong> $currentstation</center></p>
+        <img src="radar.gif" alt="Radar">
+        <p><center>$currentcond</center></p>
+    </div>
+
+    <div class="table-container third">
+        <h2>Hourly Forecast</h2>
+        <table border="1">
+            <tr>
+                <th>Local Time</th>
+                <th>Temperature</th>
+                <th>Change of Rain</th>
+            </tr>
+            <tr>
+                <td>$hourTime1</td>
+                <td>$hourTemp1a°F</td>
+                <td>$hourRain1a%</td>
+            </tr>
+            <tr>
+                <td>$hourTime2</td>
+                <td>$hourTemp2a°F</td>
+                <td>$hourRain2a%</td>
+            </tr>
+            <tr>
+                <td>$hourTime3</td>
+                <td>$hourTemp3a°F</td>
+                <td>$hourRain3a%</td>
+            </tr>
+            <tr>
+                <td>$hourTime4</td>
+                <td>$hourTemp4a°F</td>
+                <td>$hourRain4a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime5</td>
+                <td>$hourTemp5a°F</td>
+                <td>$hourRain5a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime6</td>
+                <td>$hourTemp6a°F</td>
+                <td>$hourRain6a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime7</td>
+                <td>$hourTemp7a°F</td>
+                <td>$hourRain7a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime8</td>
+                <td>$hourTemp8a°F</td>
+                <td>$hourRain8a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime9</td>
+                <td>$hourTemp9a°F</td>
+                <td>$hourRain9a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime10</td>
+                <td>$hourTemp10a°F</td>
+                <td>$hourRain10a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime11</td>
+                <td>$hourTemp11a°F</td>
+                <td>$hourRain11a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime12</td>
+                <td>$hourTemp12a°F</td>
+                <td>$hourRain12a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime13</td>
+                <td>$hourTemp13a°F</td>
+                <td>$hourRain13a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime14</td>
+                <td>$hourTemp14a°F</td>
+                <td>$hourRain14a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime15</td>
+                <td>$hourTemp15a°F</td>
+                <td>$hourRain15a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime16</td>
+                <td>$hourTemp16a°F</td>
+                <td>$hourRain16a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime17</td>
+                <td>$hourTemp17a°F</td>
+                <td>$hourRain17a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime18</td>
+                <td>$hourTemp18a°F</td>
+                <td>$hourRain18a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime19</td>
+                <td>$hourTemp19a°F</td>
+                <td>$hourRain19a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime20</td>
+                <td>$hourTemp20a°F</td>
+                <td>$hourRain20a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime21</td>
+                <td>$hourTemp21a°F</td>
+                <td>$hourRain21a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime22</td>
+                <td>$hourTemp22a°F</td>
+                <td>$hourRain22a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime23</td>
+                <td>$hourTemp23a°F</td>
+                <td>$hourRain23a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime24</td>
+                <td>$hourTemp24a°F</td>
+                <td>$hourRain24a%</td>
+            </tr>
+                <tr>
+                <td>$hourTime25</td>
+                <td>$hourTemp25a°F</td>
+                <td>$hourRain25a%</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- JavaScript to refresh the page every 10 minutes -->
+<script>
+    setTimeout(function(){
+        location.reload();
+    }, 610000); // Refresh every 10 minutes (600,000 milliseconds)
+</script>
 </body>
 </html>
 
