@@ -569,13 +569,13 @@ while true; do
 			</table>
 		</div>
 		<div class="left-content third">
-			<p><img src="logo.gif" alt="Your Logo"></p>
+			<p><img src="logo.gif" alt="--Cloudsy--"></p>
 			<h3><center>NOAA Information</center></h3>
 			<p><strong><center>City Name:</strong> $currentcity</center></p>
 			<p><strong><center>Condition:</strong> $currentcondition</center></p>
 			<p><strong><center>Current Temp:</strong> $currenttemp°F</center></p>
 			<p><strong><center>Radar Station:</strong> $currentstation</center></p>
-			<img src="radar.gif" alt="Radar">
+			<img src="radar.gif" alt="Radar Image Unavailable">
 			<p style="max-width: 400px; margin: 0 auto; text-align: center;">$currentcond</center></p>
 		</div>
 		<div class="table-container third">
