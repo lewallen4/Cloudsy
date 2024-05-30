@@ -29,7 +29,9 @@ Cloudsy is a simple command-line weather application that fetches weather data f
 
 
 
+<b>Coming Soon</b>
 
+Severe Weather Alerts!
 
 <b>License</b>
 
