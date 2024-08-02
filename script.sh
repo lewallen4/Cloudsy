@@ -247,7 +247,7 @@ while true; do
 # 	radar.gif
 		currentcity=$(cat db/stationlookup.json | grep city | awk 'NR==2' | awk -F'"' '{print $4}')
 		currentcondition=$(cat "db/7day.json" | grep -m 1 -A 27 '"number": 1,' | grep '"shortForecast"' | sed 's/.*: "\(.*\)".*/\1/')
-		currenttemp=$(cat "db/7day.json" | grep -m 1 -A 27 '"number": 1,' | grep '"temperature"' | sed 's/.*: "\(.*\)".*/\1/' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+		currenttemp=$(cat "db/7day.json" | grep -m 1 -A 27 '"number": 1,' | grep '"temperature"' | sed 's/.*: "\(.*\)".*/\1/' | sed 's/[^0-9]*\([0-9]\+\).*/\1/' | head -n 1)
 		hourlyURL=$(cat "db/stationlookup.json" | grep '"forecastHourly"' | awk -F'"' '{print $4}')
 		currentcond=$(cat "db/7day.json" | grep -m 1 -A 27 '"number": 1,' | grep '"detailedForecast"' | awk -F '"' '{print $4}')	
 
