@@ -726,6 +726,9 @@ while true; do
 
 EOF
 
+	# microversion engage
+	bash db/micro.sh
+
 	# fix the words
 	awk '{if (gsub("Cloudy", "Cloudsy")) print; else print $0}' db/frontEndraw.html > db/frontEnd1.html
 	awk '{if (gsub("cloudy", "cloudsy")) print; else print $0}' db/frontEnd1.html > db/frontEnd.html
