@@ -457,6 +457,7 @@ while true; do
 				border-radius: 10px;
 				overflow: auto;
 				display: flex;
+				height: 90vh;
 				flex-direction: row;
 				justify-content: space-between;
 			}
