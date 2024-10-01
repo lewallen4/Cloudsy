@@ -205,6 +205,104 @@ cat <<EOF >db/frontEnd.html
 
 
 EOF
+# duplicate it to mobile version
+cat <<EOF >db/frontEndmobile.html
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>Loading...</title>
+		<style>
+			body {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				margin: 0;
+				font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
+				background-color: lightgray;
+			}
+			.container {
+				text-align: center;
+				background-color: white;
+				border: 5px solid white;
+				padding: 20px;
+				border-radius: 10px;
+				overflow: auto;
+			}
+			img {
+				max-width: 100%;
+				max-height: 100%;
+				margin-bottom: 20px;
+			}
+			.left-content {
+				display: inline-block;
+				text-align: left;
+				vertical-align: top; /* Align content at the top */
+				width: 45%; /* Adjust the width as needed */
+				margin-right: 5%; /* Add some margin between the left and right content */
+			}
+			.table-container {
+				display: inline-block;
+				text-align: center;
+				width: 45%; /* Adjust the width as needed */
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				overflow: hidden;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);
+				margin: 0 auto;
+				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
+			}
+			th,
+			td {
+				padding: 10px;
+				background-color: rgba(255,255,255,0.2);
+				color: #000;
+			}
+			th {
+				text-align: left;
+				background-color: rgba(255,255,255,0.6);
+				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
+			}
+			thead th {
+				background-color: #55608f;
+			}
+			tbody tr:hover {
+				background-color: rgba(255,255,255,0.3);
+			}
+			td {
+				position: relative;
+			}
+			td:hover:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<p><img src="loading.gif" alt="Loading, please wait"></p>
+		</div>
+		<!-- JavaScript to refresh the page every 10 minutes -->
+		<script>
+			setTimeout(function(){
+				location.reload();
+			}, 6000); // Refresh every 10 minutes (600,000 milliseconds)
+		</script>
+	</body>
+</html>
+
+
+EOF
 
 # open the loading screen on different OS
 html_file="db/frontEnd.html"
@@ -727,6 +825,301 @@ while true; do
 
 EOF
 
+# write HTML content to a file
+    cat <<EOF >db/frontEndmobileraw.html
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Cloudsy</title>
+		<style>
+			body {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				margin: 0;
+				font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
+				background-color: lightgray;
+			}
+			.container {
+				background-color: white;
+				border: 5px solid white;
+				padding: 20px;
+				border-radius: 10px;
+				overflow: auto;
+				display: flex;
+				height: 90vh;
+				flex-direction: column;
+				justify-content: space-between;
+			}
+			.third {
+				width: 100%;
+			}
+			img {
+				max-width: 100%;
+				max-height: 100%;
+				margin-bottom: 20px;
+			}
+			.left-content {
+				display: inline-block;
+				text-align: center;
+				vertical-align: top; /* Align content at the top */
+				width: 40%; /* Adjust the width as needed */
+				margin-right: 3%; /* Add some margin between the left and right content */
+				margin-left: 3%; /* Add some margin between the left and right content */
+			}
+			.table-container {
+				text-align: center;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				overflow: hidden;
+				box-shadow: 0 0 20px rgba(0,0,0,0.1);
+				margin: 0 auto;
+				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
+			}
+			th,
+			td {
+				padding: 10px;
+				background-color: rgba(255,255,255,0.2);
+				color: #000;
+			}
+			th {
+				text-align: left;
+				background-color: rgba(255,255,255,0.6);
+				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
+			}
+			thead th {
+				background-color: #55608f;
+			}
+			tbody tr:hover {
+				background-color: rgba(255,255,255,0.3);
+			}
+			td {
+				position: relative;
+			}
+			td:hover:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+		<div class="table-container third">
+			<p><img src="logo.gif" alt="--Cloudsy--"></p>
+			<h3><center>NOAA Information</center></h3>
+			<p><strong><center>City Name:</strong> $currentcity</center></p>
+			<p><strong><center>Condition:</strong> $currentcondition</center></p>
+			<p><strong><center>Current Temp:</strong> $currenttemp°F</center></p>
+			<p><strong><center>Radar Station:</strong> $currentstation</center></p>
+			<img src="radar.gif" alt="Radar Image Unavailable">
+			<p style="max-width: 400px; margin: 0 auto; text-align: center;">$currentcond</center></p>
+		</div>
+		<div class="table-container third">
+			<h2>Weekly Forecast</h2>
+			<table border="1" style="width: 400px;">
+				<tr>
+					<th>$weeklyName1</th>
+					<th style="text-align: right; font-weight: normal;">$weeklyTemp1°F</th>
+				</tr>
+				<tr style="height:100px">
+					<td colspan="2" style="text-align: left;">$weeklyLong1</td>
+				</tr>
+				<tr>
+					<th>$weeklyName2</th>
+					<th style="text-align: right; font-weight: normal;">$weeklyTemp2°F</th>
+				</tr>
+				<tr style="height:100px">
+					<td colspan="2" style="text-align: left;">$weeklyLong2</td>
+				</tr>
+				<tr>
+					<th>$weeklyName3</th>
+					<th style="text-align: right; font-weight: normal;">$weeklyTemp3°F</th>
+				</tr>
+				<tr style="height:100px">
+					<td colspan="2" style="text-align: left;">$weeklyLong3</td>
+				</tr>
+				<tr>
+					<th>$weeklyName4</th>
+					<th style="text-align: right; font-weight: normal;">$weeklyTemp4°F</th>
+				</tr>
+				<tr style="height:100px">
+					<td colspan="2" style="text-align: left;">$weeklyLong4</td>
+				</tr>
+				<tr>
+					<th>$weeklyName5</th>
+					<th style="text-align: right; font-weight: normal;">$weeklyTemp5°F</th>
+				</tr>
+				<tr style="height:100px">
+					<td colspan="2" style="text-align: left;">$weeklyLong5</td>
+				</tr>
+				<tr>
+					<th>$weeklyName6</th>
+					<th style="text-align: right; font-weight: normal;">$weeklyTemp6°F</th>
+				</tr>
+				<tr style="height:100px">
+					<td colspan="2" style="text-align: left;">$weeklyLong6</td>
+				</tr>
+			</table>
+		</div>
+		<div class="table-container third">
+			<h2>Hourly Forecast</h2>
+			<table border="1">
+				<tr>
+					<th>Local Time</th>
+					<th>Temperature</th>
+					<th>Change of Rain</th>
+				</tr>
+				<tr>
+					<td>$hourTime1</td>
+					<td>$hourTemp1a°F</td>
+					<td>$hourRain1a%</td>
+				</tr>
+				<tr>
+					<td>$hourTime2</td>
+					<td>$hourTemp2a°F</td>
+					<td>$hourRain2a%</td>
+				</tr>
+				<tr>
+					<td>$hourTime3</td>
+					<td>$hourTemp3a°F</td>
+					<td>$hourRain3a%</td>
+				</tr>
+				<tr>
+					<td>$hourTime4</td>
+					<td>$hourTemp4a°F</td>
+					<td>$hourRain4a%</td>
+				</tr>
+				<tr>
+					<td>$hourTime5</td>
+					<td>$hourTemp5a°F</td>
+					<td>$hourRain5a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime6</td>
+					<td>$hourTemp6a°F</td>
+					<td>$hourRain6a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime7</td>
+					<td>$hourTemp7a°F</td>
+					<td>$hourRain7a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime8</td>
+					<td>$hourTemp8a°F</td>
+					<td>$hourRain8a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime9</td>
+					<td>$hourTemp9a°F</td>
+					<td>$hourRain9a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime10</td>
+					<td>$hourTemp10a°F</td>
+					<td>$hourRain10a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime11</td>
+					<td>$hourTemp11a°F</td>
+					<td>$hourRain11a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime12</td>
+					<td>$hourTemp12a°F</td>
+					<td>$hourRain12a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime13</td>
+					<td>$hourTemp13a°F</td>
+					<td>$hourRain13a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime14</td>
+					<td>$hourTemp14a°F</td>
+					<td>$hourRain14a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime15</td>
+					<td>$hourTemp15a°F</td>
+					<td>$hourRain15a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime16</td>
+					<td>$hourTemp16a°F</td>
+					<td>$hourRain16a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime17</td>
+					<td>$hourTemp17a°F</td>
+					<td>$hourRain17a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime18</td>
+					<td>$hourTemp18a°F</td>
+					<td>$hourRain18a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime19</td>
+					<td>$hourTemp19a°F</td>
+					<td>$hourRain19a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime20</td>
+					<td>$hourTemp20a°F</td>
+					<td>$hourRain20a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime21</td>
+					<td>$hourTemp21a°F</td>
+					<td>$hourRain21a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime22</td>
+					<td>$hourTemp22a°F</td>
+					<td>$hourRain22a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime23</td>
+					<td>$hourTemp23a°F</td>
+					<td>$hourRain23a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime24</td>
+					<td>$hourTemp24a°F</td>
+					<td>$hourRain24a%</td>
+				</tr>
+                <tr>
+					<td>$hourTime25</td>
+					<td>$hourTemp25a°F</td>
+					<td>$hourRain25a%</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+<!-- JavaScript to refresh the page every 10 minutes -->
+	<script>
+		setTimeout(function(){
+			location.reload();
+		}, 610000); // Refresh every 10 minutes (600,000 milliseconds)
+	</script>
+</body>
+</html>
+
+
+EOF
+
 	# microversion engage
 	bash db/micro.sh
 
@@ -734,9 +1127,15 @@ EOF
 	awk '{if (gsub("Cloudy", "Cloudsy")) print; else print $0}' db/frontEndraw.html > db/frontEnd1.html
 	awk '{if (gsub("cloudy", "cloudsy")) print; else print $0}' db/frontEnd1.html > db/frontEnd.html
 
+		# fix the words mobile
+	awk '{if (gsub("Cloudy", "Cloudsy")) print; else print $0}' db/frontEndmobileraw.html > db/frontEndmobile1.html
+	awk '{if (gsub("cloudy", "cloudsy")) print; else print $0}' db/frontEndmobile1.html > db/frontEndmobile.html
+
 	# cleanup
 	rm db/frontEndraw.html
 	rm db/frontEnd1.html
+	rm db/frontEndmobileraw.html
+	rm db/frontEndmobile1.html
 
 	# wait for 600 seconds (10 minutes) before fetching data again
 	echo "  will refresh in 10 minutes..."
