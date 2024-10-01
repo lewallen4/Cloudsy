@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Parse command-line arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -z|--zip) zip_code="$2"; shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
+
 # ASCII art for the word "weather"
 echo " ______     __         ______     __  __     ____    ______     __  __    "
 echo "/\  ___\   /\ \       /\  __ \   /\ \/\ \   | |  \  /\  ___\   /\ \_\ \   "
@@ -9,8 +18,10 @@ echo "  \/_____/   \/_____/   \/_____/   \/_____/ |/___/    \/_____/   \/_____/ 
 echo " "
 echo " "
 
-# prompt user for zip code
-read -p "	Enter your zip code: " zip_code
+# If no zip code argument is provided, prompt user for zip code
+if [ -z "$zip_code" ]; then
+    read -p "	Enter your zip code: " zip_code
+fi
 
 # sanitize and extract only the first 5 digits from the zip code
 zip_code=${zip_code//[^0-9]/}   # Remove all non-digit characters
