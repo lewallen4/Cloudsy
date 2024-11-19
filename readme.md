@@ -37,6 +37,12 @@ Severe Weather Alerts!
 
 The zip code data (uszips.csv) included in this project is sourced from public domain data and is subject to its own license (included in folder). All weather data fetched from NOAA and the National Weather Service belong to their respective owners and are used in compliance with their terms of service.
 
+The zip code data (uszips.csv) included in this project is sourced from public domain data and is subject to its own license (included in the folder). All weather data fetched from NOAA (National Oceanic and Atmospheric Administration) and the National Weather Service belong to their respective owners and are used in compliance with their terms of service.
+
+This project utilizes Portable Git Bash for running the application on Windows systems. Portable Git Bash is provided by the Git for Windows project, and its usage in this project adheres to the terms and agreements outlined by its respective license. For more information about Portable Git Bash and its license, please refer to the official Git for Windows documentation and license information
+
+
+
 
 <b>Disclaimer</b>
 
