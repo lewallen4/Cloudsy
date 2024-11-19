@@ -14,7 +14,7 @@ Cloudsy is a simple command-line weather application that fetches weather data f
 
     # Clone the repository to your local machine:
 
-    git clone https://github.com/your_username/Cloudsy.git
+    git clone https://github.com/lewallen4/Cloudsy.git
 
     # Navigate to the project directory:
 
