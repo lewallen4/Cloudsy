@@ -6,7 +6,6 @@ Cloudsy is a simple command-line weather application that fetches weather data f
 
 <b>Prerequisites</b>
 
-    Linux or Windows environment with Git Bash installed
     grep, awk, and sed should be available in your environment
 
 
@@ -23,6 +22,7 @@ Cloudsy is a simple command-line weather application that fetches weather data f
     # Run the script:
 
     ./Cloudsy.sh
+	(if you don't have a bash interpreter and are on windows, run the .ps1 script)
 
     # Enter your zip code when prompted. Note that Cloudsy currently supports US zip codes only.
 
@@ -59,4 +59,4 @@ Feel free to contribute to this project by opening issues or submitting pull req
 Cloudsy is made possible by the contributions of the open-source community and the data provided by NOAA and the National Weather Service.
 Happy Weathering!
 
-We hope Cloudsy helps you stay informed about the weather conditions in your area. Enjoy using Cloudsy, and may your days be filled with clear skies!
+We hope Cloudsy helps you stay informed about the weather conditions in your area. Enjoy using Cloudsy, and may your days be filled with new opportunities!
