@@ -347,7 +347,6 @@ while true; do
 	curl -s "https://api.weather.gov/alerts?point=${currentlat},${currentlon}" > db/alerts.json
 		currentzone=$(grep forecastZone db/stationlookup.json | awk -F '"' '{print $4}' | awk -F '/' '{print $6}')
 		alert1=$(grep "/$currentzone" db/alerts.json)
-	tac db/alerts.json | grep -A 1000 "$alert" | grep '"headline"' > db/activealerts.json
 		sevenday=$(cat "db/stationlookup.json" | grep '"forecast"' | awk -F'"' '{print $4}')
 	curl -s "$sevenday" > db/7day.json
 #	dev notes: you now have 3 assets
@@ -540,6 +539,102 @@ while true; do
 	for ((i = 1; i <= counter; i++)); do
 		var="weeklyTemp$i"
 	done
+	
+	
+	
+	
+	
+# alert section
+
+# File containing JSON data
+json_file1="db/alerts.json"
+
+# Get current time in ISO 8601 format
+current_time1=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+# Function to parse alerts and check expiration
+parse_alerts1() {
+  local in_alert=false
+  local expires=""
+  local id=""
+  local event=""
+  local headline=""
+  local severity=""
+  local urgency=""
+  local description=""
+  local instruction=""
+
+  while IFS= read -r line; do
+    # Detect start of an alert
+    if [[ $line =~ \"id\": ]]; then
+      id=$(echo "$line" | sed -E 's/.*"id": "([^"]+)".*/\1/')
+    fi
+
+    # Capture event
+    if [[ $line =~ \"event\": ]]; then
+      event=$(echo "$line" | sed -E 's/.*"event": "([^"]+)".*/\1/')
+    fi
+
+    # Capture expires
+    if [[ $line =~ \"expires\": ]]; then
+      expires=$(echo "$line" | sed -E 's/.*"expires": "([^"]+)".*/\1/')
+    fi
+
+    # Capture headline
+    if [[ $line =~ \"headline\": ]]; then
+      headline=$(echo "$line" | sed -E 's/.*"headline": "([^"]+)".*/\1/')
+    fi
+
+    # Capture severity
+    if [[ $line =~ \"severity\": ]]; then
+      severity=$(echo "$line" | sed -E 's/.*"severity": "([^"]+)".*/\1/')
+    fi
+
+    # Capture urgency
+    if [[ $line =~ \"urgency\": ]]; then
+      urgency=$(echo "$line" | sed -E 's/.*"urgency": "([^"]+)".*/\1/')
+    fi
+	
+	# Capture description
+    if [[ $line =~ \"description\": ]]; then
+      description=$(echo "$line" | sed -E 's/.*"description": "([^"]+)".*/\1/')
+    fi
+
+    # Capture instruction
+    if [[ $line =~ \"instruction\": ]]; then
+      instruction=$(echo "$line" | sed -E 's/.*"instruction": "([^"]+)".*/\1/')
+    fi
+
+    # If end of an alert is detected, check expiration
+    if [[ $line =~ \"response\": ]]; then
+      if [[ "$expires" > "$current_time" ]]; then
+        echo "ID: $id"
+        echo "Event: $event"
+        echo "Expires: $expires"
+        echo "Headline: $headline"
+        echo "Severity: $severity"
+        echo "Urgency: $urgency"
+		echo "Description: $description"
+        echo "Instruction: $instruction"
+        echo "-----------------------"
+      fi
+      # Reset variables
+      id=""
+      event=""
+      expires=""
+      headline=""
+      severity=""
+      urgency=""
+	  description=""
+      instruction=""
+    fi
+  done < "$json_file1"
+}
+
+# Run the parser
+parse_alerts1 > db/activealerts1.json
+
+
 
 # write HTML content to a file
     cat <<EOF >db/frontEndraw.html
