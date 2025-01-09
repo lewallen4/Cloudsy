@@ -6,7 +6,7 @@ Cloudsy is a simple command-line weather application that fetches weather data f
 
 <b>Prerequisites</b>
 
-    None, with the included portable bash intpreter!
+    None, with the included portable bash interpreter!
 
 
 <b>Usage</b>
