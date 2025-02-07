@@ -118,201 +118,103 @@ Error_time() {
     esac
 }
 
+loadingimage=$(cat db/loading.txt)
+
+
 # the loading screen
 cat <<EOF >db/frontEnd.html
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>Loading...</title>
-		<style>
-			body {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-				margin: 0;
-				font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
-				background-color: lightgray;
-			}
-			.container {
-				text-align: center;
-				background-color: white;
-				border: 5px solid white;
-				padding: 20px;
-				border-radius: 10px;
-				overflow: auto;
-			}
-			img {
-				max-width: 100%;
-				max-height: 100%;
-				margin-bottom: 20px;
-			}
-			.left-content {
-				display: inline-block;
-				text-align: left;
-				vertical-align: top; /* Align content at the top */
-				width: 45%; /* Adjust the width as needed */
-				margin-right: 5%; /* Add some margin between the left and right content */
-			}
-			.table-container {
-				display: inline-block;
-				text-align: center;
-				width: 45%; /* Adjust the width as needed */
-			}
-			table {
-				width: 100%;
-				border-collapse: collapse;
-				overflow: hidden;
-				box-shadow: 0 0 20px rgba(0,0,0,0.1);
-				margin: 0 auto;
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			th,
-			td {
-				padding: 10px;
-				background-color: rgba(255,255,255,0.2);
-				color: #000;
-			}
-			th {
-				text-align: left;
-				background-color: rgba(255,255,255,0.6);
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			thead th {
-				background-color: #55608f;
-			}
-			tbody tr:hover {
-				background-color: rgba(255,255,255,0.3);
-			}
-			td {
-				position: relative;
-			}
-			td:hover:before {
-				content: "";
-				position: absolute;
-				left: 0;
-				right: 0;
-				top: -9999px;
-				bottom: -9999px;
-				background-color: rgba(255,255,255,0.2);
-				z-index: -1;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<p><img src="loading.gif" alt="Loading, please wait"></p>
-		</div>
-		<!-- JavaScript to refresh the page every 10 minutes -->
-		<script>
-			setTimeout(function(){
-				location.reload();
-			}, 6000); // Refresh every 10 minutes (600,000 milliseconds)
-		</script>
-	</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
+        background-color: lightgray;
+      }
+      .container {
+        text-align: left;
+        background-color: white;
+        border: 5px solid white;
+        padding: 20px;
+        border-radius: 10px;
+        overflow: auto;
+      }
+      pre {
+        margin: 0;
+        padding: 0;
+        line-height: 1;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <pre>$loadingimage</pre>
+    </div>
+    <!-- JavaScript to refresh the page every 6 seconds -->
+    <script>
+      setTimeout(function(){
+        location.reload();
+      }, 6000);
+    </script>
+  </body>
 </html>
-
-
 EOF
+
 # duplicate it to mobile version
 cat <<EOF >db/frontEndmobile.html
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>Loading...</title>
-		<style>
-			body {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-				margin: 0;
-				font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
-				background-color: lightgray;
-			}
-			.container {
-				text-align: center;
-				background-color: white;
-				border: 5px solid white;
-				padding: 20px;
-				border-radius: 10px;
-				overflow: auto;
-			}
-			img {
-				max-width: 100%;
-				max-height: 100%;
-				margin-bottom: 20px;
-			}
-			.left-content {
-				display: inline-block;
-				text-align: left;
-				vertical-align: top; /* Align content at the top */
-				width: 45%; /* Adjust the width as needed */
-				margin-right: 5%; /* Add some margin between the left and right content */
-			}
-			.table-container {
-				display: inline-block;
-				text-align: center;
-				width: 45%; /* Adjust the width as needed */
-			}
-			table {
-				width: 100%;
-				border-collapse: collapse;
-				overflow: hidden;
-				box-shadow: 0 0 20px rgba(0,0,0,0.1);
-				margin: 0 auto;
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			th,
-			td {
-				padding: 10px;
-				background-color: rgba(255,255,255,0.2);
-				color: #000;
-			}
-			th {
-				text-align: left;
-				background-color: rgba(255,255,255,0.6);
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			thead th {
-				background-color: #55608f;
-			}
-			tbody tr:hover {
-				background-color: rgba(255,255,255,0.3);
-			}
-			td {
-				position: relative;
-			}
-			td:hover:before {
-				content: "";
-				position: absolute;
-				left: 0;
-				right: 0;
-				top: -9999px;
-				bottom: -9999px;
-				background-color: rgba(255,255,255,0.2);
-				z-index: -1;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<p><img src="loading.gif" alt="Loading, please wait"></p>
-		</div>
-		<!-- JavaScript to refresh the page every 10 minutes -->
-		<script>
-			setTimeout(function(){
-				location.reload();
-			}, 6000); // Refresh every 10 minutes (600,000 milliseconds)
-		</script>
-	</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
+        background-color: lightgray;
+      }
+      .container {
+        text-align: left;
+        background-color: white;
+        border: 5px solid white;
+        padding: 20px;
+        border-radius: 10px;
+        overflow: auto;
+      }
+      pre {
+        margin: 0;
+        padding: 0;
+        line-height: 1;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <pre>$loadingimage</pre>
+    </div>
+    <!-- JavaScript to refresh the page every 6 seconds -->
+    <script>
+      setTimeout(function(){
+        location.reload();
+      }, 6000);
+    </script>
+  </body>
 </html>
-
-
 EOF
 
 # open the loading screen on different OS
