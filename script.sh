@@ -633,7 +633,7 @@ parse_alerts1() {
 
 # Run the 1stparser then the additional parser to ensure only active alerts are shown
 parse_alerts1 > db/activealerts1.json
-bash db/activeparser.sh
+bash db/alertparser.sh
 
 
 
@@ -937,7 +937,7 @@ EOF
     cat <<EOF >db/frontEndmobileraw.html
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+	<head id="mobile">
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Cloudsy</title>
@@ -1232,11 +1232,32 @@ EOF
 
 
 # modfied the alerts and then injects alerts into the page if any are active
-sed -i 's/\(.*\)/<p>\1<\/p>/' inputFile.txt
-sed -i '1i<div class="container">' displayalerts.txt
-echo '</div>' >> displayalerts.txt
-sed '/<body id="hereisthealerttag">/ { r activealerts.json; d }' frontEndRaw.html
+if [ -f "db/activealerts.txt" ]; then
+sed -i 's/\(.*\)/<p>\1<\/p>/' db/activealerts.txt
+sed -i '1i<div class="left-content third">' db/activealerts.txt
+echo '</div>' >> db/activealerts.txt
 
+# Find the line number of the exact match.
+line=$(grep -n '<body id="hereisthealerttag">$' db/frontEndraw.html | cut -d: -f1)
+
+if [ -n "$line" ]; then
+  # Create a temporary file.
+  tmpfile=$(mktemp)
+
+  # Write the lines up to (and including) the matching line.
+  head -n "$line" db/frontEndraw.html > "$tmpfile"
+
+  # Append the contents of db/activealerts.txt.
+  cat db/activealerts.txt >> "$tmpfile"
+
+  # Append the remainder of the file.
+  tail -n +$((line + 1)) db/frontEndraw.html >> "$tmpfile"
+
+  # Replace the original file with the updated file.
+  mv "$tmpfile" db/frontEndraw.html
+fi
+
+fi
 
 
 

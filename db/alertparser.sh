@@ -25,4 +25,4 @@ awk -v now="$now" '
         print $0
     }
   }
-' activealerts1.json > activealerts.json
+' db/activealerts1.json > db/activealerts.txt
