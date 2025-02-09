@@ -631,8 +631,10 @@ parse_alerts1() {
   done < "$json_file1"
 }
 
-# Run the parser
+# Run the 1stparser then the additional parser to ensure only active alerts are shown
 parse_alerts1 > db/activealerts1.json
+bash db/activeparser.sh
+
 
 
 
@@ -724,8 +726,8 @@ parse_alerts1 > db/activealerts1.json
 			}
 		</style>
 	</head>
-	<body>
-		<div class="container">
+	<body id="hereisthealerttag">
+	<div class="container">
 		<div class="table-container third">
 			<h2>Weekly Forecast</h2>
 			<table border="1" style="width: 400px;">
@@ -1019,7 +1021,7 @@ EOF
 			}
 		</style>
 	</head>
-	<body>
+	<body id="hereisthealerttag">
 		<div class="container">
 		<div class="table-container third">
 			<p><img src="logo.gif" alt="--Cloudsy--"></p>
@@ -1225,6 +1227,23 @@ EOF
 
 
 EOF
+
+
+
+
+# modfied the alerts and then injects alerts into the page if any are active
+sed -i 's/\(.*\)/<p>\1<\/p>/' inputFile.txt
+sed -i '1i<div class="container">' displayalerts.txt
+echo '</div>' >> displayalerts.txt
+sed '/<body id="hereisthealerttag">/ { r activealerts.json; d }' frontEndRaw.html
+
+
+
+
+
+
+
+
 
 	# microversion engage
 	bash db/micro.sh
