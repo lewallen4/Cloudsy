@@ -566,9 +566,6 @@ parse_alerts1() {
 
   while IFS= read -r line; do
     # Detect start of an alert
-    if [[ $line =~ \"id\": ]]; then
-      id=$(echo "$line" | sed -E 's/.*"id": "([^"]+)".*/\1/')
-    fi
 
     # Capture event
     if [[ $line =~ \"event\": ]]; then
@@ -608,7 +605,6 @@ parse_alerts1() {
     # If end of an alert is detected, check expiration
     if [[ $line =~ \"response\": ]]; then
       if [[ "$expires" > "$current_time" ]]; then
-        echo "ID: $id"
         echo "Event: $event"
         echo "Expires: $expires"
         echo "Headline: $headline"
@@ -632,6 +628,7 @@ parse_alerts1() {
 }
 
 # Run the 1stparser then the additional parser to ensure only active alerts are shown
+echo " " > db/activealerts.txt
 parse_alerts1 > db/activealerts1.json
 bash db/alertparser.sh
 
@@ -652,7 +649,7 @@ bash db/alertparser.sh
 				justify-content: center;
 				align-items: center;
 				height: 100vh;
-				margin: 0;
+				margin: 5px;
 				font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
 				background-color: lightgray;
 			}
@@ -660,6 +657,7 @@ bash db/alertparser.sh
 				background-color: white;
 				border: 5px solid white;
 				padding: 20px;
+				margin: 5px;
 				border-radius: 10px;
 				overflow: auto;
 				display: flex;
@@ -670,6 +668,12 @@ bash db/alertparser.sh
 			.third {
 				width: 33%;
 			}
+			.half {
+				width: 25%;
+			}
+			.third2 {
+				width: 1%;
+			}
 			img {
 				max-width: 100%;
 				max-height: 100%;
@@ -679,6 +683,14 @@ bash db/alertparser.sh
 				display: inline-block;
 				text-align: center;
 				vertical-align: top; /* Align content at the top */
+				width: 40%; /* Adjust the width as needed */
+				margin-right: 3%; /* Add some margin between the left and right content */
+				margin-left: 3%; /* Add some margin between the left and right content */
+			}
+			.left-content2 {
+				display: inline-block;
+				text-align: left;
+				vertical-align: middle; /* Align content at the top */
 				width: 40%; /* Adjust the width as needed */
 				margin-right: 3%; /* Add some margin between the left and right content */
 				margin-left: 3%; /* Add some margin between the left and right content */
@@ -947,7 +959,7 @@ EOF
 				justify-content: center;
 				align-items: center;
 				height: 100vh;
-				margin: 0;
+				margin: 5px;
 				font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
 				background-color: lightgray;
 			}
@@ -955,6 +967,7 @@ EOF
 				background-color: white;
 				border: 5px solid white;
 				padding: 20px;
+				margin: 5px;
 				border-radius: 10px;
 				overflow: auto;
 				display: flex;
@@ -963,6 +976,9 @@ EOF
 				justify-content: space-between;
 			}
 			.third {
+				width: 100%;
+			}
+			.half {
 				width: 100%;
 			}
 			img {
@@ -1228,13 +1244,25 @@ EOF
 
 EOF
 
+# This is the alert logo
+alertlogo=$(cat << 'EOF'
+<p>    ___     __     ______ ____  ______</p>
+<p>   /   |   / /    / ____// __ \/_  __/</p>
+<p>  / /| |  / /    / __/  / /_/ / / /   </p>
+<p> / ___ | / /___ / /___ / _, _/ / /    </p>
+<p>/_/  |_|/_____//_____//_/ |_| /_/     </p>
+EOF
+)
+
 
 
 
 # modfied the alerts and then injects alerts into the page if any are active
 if [ -f "db/activealerts.txt" ]; then
 sed -i 's/\(.*\)/<p>\1<\/p>/' db/activealerts.txt
-sed -i '1i<div class="left-content third">' db/activealerts.txt
+sed -i '1i<div>' db/activealerts.txt
+sed -i '1i<div class="container half">' db/activealerts.txt
+echo '</div>' >> db/activealerts.txt
 echo '</div>' >> db/activealerts.txt
 
 # Find the line number of the exact match.
