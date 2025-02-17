@@ -803,7 +803,7 @@ bash db/alertparser.sh
 				<tr>
 					<th>Local Time</th>
 					<th>Temperature</th>
-					<th>Change of Rain</th>
+					<th>Precipitation Chance</th>
 				</tr>
 				<tr>
 					<td>$hourTime1</td>
@@ -1102,7 +1102,7 @@ EOF
 				<tr>
 					<th>Local Time</th>
 					<th>Temperature</th>
-					<th>Change of Rain</th>
+					<th>Precipitation Chance</th>
 				</tr>
 				<tr>
 					<td>$hourTime1</td>
