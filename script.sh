@@ -605,12 +605,12 @@ parse_alerts1() {
     # If end of an alert is detected, check expiration
     if [[ $line =~ \"response\": ]]; then
       if [[ "$expires" > "$current_time" ]]; then
-        echo "Event: $event"
+        echo "$event"
         echo "Expires: $expires"
-        echo "Headline: $headline"
+        echo "$headline"
         echo "Severity: $severity"
         echo "Urgency: $urgency"
-		echo "Description: $description"
+		echo "$description"
         echo "Instruction: $instruction"
         echo "-----------------------"
       fi
@@ -1244,22 +1244,13 @@ EOF
 
 EOF
 
-# This is the alert logo
-alertlogo=$(cat << 'EOF'
-<p>    ___     __     ______ ____  ______</p>
-<p>   /   |   / /    / ____// __ \/_  __/</p>
-<p>  / /| |  / /    / __/  / /_/ / / /   </p>
-<p> / ___ | / /___ / /___ / _, _/ / /    </p>
-<p>/_/  |_|/_____//_____//_/ |_| /_/     </p>
-EOF
-)
-
 
 
 
 # modfied the alerts and then injects alerts into the page if any are active
 if [ -f "db/activealerts.txt" ]; then
-sed -i 's/\(.*\)/<p>\1<\/p>/' db/activealerts.txt
+sed -i -E 's/\\n\\n/\n/g; s/\\n/ /g' db/activealerts.txt
+sed -i '9,$s/\(.*\)/<p>\1<\/p>/' db/activealerts.txt
 sed -i '1i<div>' db/activealerts.txt
 sed -i '1i<div class="container half">' db/activealerts.txt
 echo '</div>' >> db/activealerts.txt
