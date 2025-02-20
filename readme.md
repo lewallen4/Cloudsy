@@ -28,16 +28,10 @@ Cloudsy is a simple command-line weather application that fetches weather data f
 
     # Enter your zip code when prompted. Note that Cloudsy currently supports US zip codes only.
 
-
-
-
-<b>Coming Soon</b>
-
-Severe Weather Alerts!
+    # If you like to skip the prompt, use the -z flag when running the script and give it your zip code!
 
 <b>License</b>
 
-The zip code data (uszips.csv) included in this project is sourced from public domain data and is subject to its own license (included in folder). All weather data fetched from NOAA and the National Weather Service belong to their respective owners and are used in compliance with their terms of service.
 
 The zip code data (uszips.csv) included in this project is sourced from public domain data and is subject to its own license (included in the folder). All weather data fetched from NOAA (National Oceanic and Atmospheric Administration) and the National Weather Service belong to their respective owners and are used in compliance with their terms of service.
 
