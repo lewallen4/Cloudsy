@@ -58,4 +58,6 @@ Feel free to contribute to this project by opening issues or submitting pull req
 
 Cloudsy is made possible by the contributions of the open-source community and the data provided by NOAA and the National Weather Service. Help the federal workforce when you can, they need it!
 
-We hope Cloudsy helps you stay informed about the weather conditions in your area. Enjoy using Cloudsy, and may your days be cloudsy and beautiful!
+We hope Cloudsy helps you stay informed about the weather conditions in your area. 
+
+Enjoy using Cloudsy, and may your days be cloudsy and beautiful!
