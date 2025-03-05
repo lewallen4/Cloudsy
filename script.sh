@@ -629,6 +629,7 @@ parse_alerts1() {
 
 # Run the 1stparser then the additional parser to ensure only active alerts are shown
 echo " " > db/activealerts.txt
+echo " " > db/activealerts1.json
 parse_alerts1 > db/activealerts1.json
 bash db/alertparser.sh
 
@@ -1248,13 +1249,14 @@ EOF
 
 
 # modfied the alerts and then injects alerts into the page if any are active
-if [ -f "db/activealerts.txt" ]; then
+if (( $(wc -l < db/activealerts.txt) > 13 )); then
 sed -i -E 's/\\n\\n/\n/g; s/\\n/ /g' db/activealerts.txt
 sed -i '9,$s/\(.*\)/<p>\1<\/p>/' db/activealerts.txt
 sed -i '1i<div>' db/activealerts.txt
 sed -i '1i<div class="container half">' db/activealerts.txt
 echo '</div>' >> db/activealerts.txt
 echo '</div>' >> db/activealerts.txt
+
 
 # Find the line number of the exact match.
 line=$(grep -n '<body id="hereisthealerttag">$' db/frontEndraw.html | cut -d: -f1)
