@@ -122,89 +122,300 @@ Error_time() {
 cat <<EOF >db/frontEnd.html
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>Loading...</title>
-		<style>
-			body {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-				margin: 0;
-				font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
-				background-color: lightgray;
-			}
-			.container {
-				text-align: center;
-				background-color: white;
-				border: 5px solid white;
-				padding: 20px;
-				border-radius: 10px;
-				overflow: auto;
-			}
-			img {
-				max-width: 100%;
-				max-height: 100%;
-				margin-bottom: 20px;
-			}
-			.left-content {
-				display: inline-block;
-				text-align: left;
-				vertical-align: top; /* Align content at the top */
-				width: 45%; /* Adjust the width as needed */
-				margin-right: 5%; /* Add some margin between the left and right content */
-			}
-			.table-container {
-				display: inline-block;
-				text-align: center;
-				width: 45%; /* Adjust the width as needed */
-			}
-			table {
-				width: 100%;
-				border-collapse: collapse;
-				overflow: hidden;
-				box-shadow: 0 0 20px rgba(0,0,0,0.1);
-				margin: 0 auto;
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			th,
-			td {
-				padding: 10px;
-				background-color: rgba(255,255,255,0.2);
-				color: #000;
-			}
-			th {
-				text-align: left;
-				background-color: rgba(255,255,255,0.6);
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			thead th {
-				background-color: #55608f;
-			}
-			tbody tr:hover {
-				background-color: rgba(255,255,255,0.3);
-			}
-			td {
-				position: relative;
-			}
-			td:hover:before {
-				content: "";
-				position: absolute;
-				left: 0;
-				right: 0;
-				top: -9999px;
-				bottom: -9999px;
-				background-color: rgba(255,255,255,0.2);
-				z-index: -1;
-			}
-		</style>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudsy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-pink: #ff7eb9;
+            --primary-blue: #7cc0ff;
+            --accent-pink: #ff65a3;
+            --accent-blue: #5e9fff;
+            --glass-dark: rgba(30, 33, 58, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+            --text-light: #f5f6fa;
+            --text-dim: rgba(245, 246, 250, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(-45deg, #1e203a, #252845, #2a2d54, #303865);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+            height: 90vh;
+			align-items: center;
+        }
+        
+        .card {
+            background: var(--glass-dark);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            padding: 24px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px) translateZ(0);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+        
+        .weekly-forecast {
+			align-items: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .current-weather {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hourly-forecast {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        h2, h3 {
+            color: var(--text-light);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--primary-blue));
+            border-radius: 3px;
+        }
+        
+        .weather-icon {
+            width: 105%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .current-temp {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-pink), var(--primary-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 8px 0;
+            text-shadow: 0 4px 12px rgba(124, 192, 255, 0.2);
+        }
+        
+        .weather-details {
+            margin: 16px 0;
+            width: 100%;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+        
+        .detail-value {
+            font-weight: 600;
+        }
+        
+        .radar-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .forecast-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        
+        .forecast-table th {
+            text-align: left;
+            padding: 12px 8px;
+            font-weight: 500;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .forecast-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .forecast-day {
+            font-weight: 600;
+        }
+        
+        .forecast-temp {
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .forecast-desc {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--text-dim);
+        }
+        
+        .hourly-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+            transition: background 0.2s ease;
+        }
+        
+        .hourly-row:hover {
+            background: var(--glass-highlight);
+        }
+        
+        .hourly-time {
+            font-weight: 500;
+            width: 80px;
+        }
+        
+        .hourly-temp {
+            font-weight: 600;
+            width: 60px;
+            text-align: center;
+            color: var(--primary-pink);
+        }
+        
+        .precip-chance {
+            display: flex;
+            align-items: center;
+            width: 100px;
+        }
+        
+        .precip-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-left: 8px;
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .precip-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            border-radius: 3px;
+        }
+        
+        .precip-value {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+        }
+        
+        .condition-highlight {
+            color: var(--primary-pink);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary-pink), var(--primary-blue));
+            border-radius: 3px;
+        }
+    </style>
+</head>
 	<body>
-		<div class="container">
-			<p><img src="loading.gif" alt="Loading, please wait"></p>
-		</div>
+		<center><div class="container">
+			<div class="weekly-forecast">
+				<p><img src="loading.gif" alt="Loading, please wait" class="radar-image"></p>
+			</div>
+		</div></center>
 		<!-- JavaScript to refresh the page every 10 minutes -->
 		<script>
 			setTimeout(function(){
@@ -220,89 +431,300 @@ EOF
 cat <<EOF >db/frontEndmobile.html
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<title>Loading...</title>
-		<style>
-			body {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-				margin: 0;
-				font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
-				background-color: lightgray;
-			}
-			.container {
-				text-align: center;
-				background-color: white;
-				border: 5px solid white;
-				padding: 20px;
-				border-radius: 10px;
-				overflow: auto;
-			}
-			img {
-				max-width: 100%;
-				max-height: 100%;
-				margin-bottom: 20px;
-			}
-			.left-content {
-				display: inline-block;
-				text-align: left;
-				vertical-align: top; /* Align content at the top */
-				width: 45%; /* Adjust the width as needed */
-				margin-right: 5%; /* Add some margin between the left and right content */
-			}
-			.table-container {
-				display: inline-block;
-				text-align: center;
-				width: 45%; /* Adjust the width as needed */
-			}
-			table {
-				width: 100%;
-				border-collapse: collapse;
-				overflow: hidden;
-				box-shadow: 0 0 20px rgba(0,0,0,0.1);
-				margin: 0 auto;
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			th,
-			td {
-				padding: 10px;
-				background-color: rgba(255,255,255,0.2);
-				color: #000;
-			}
-			th {
-				text-align: left;
-				background-color: rgba(255,255,255,0.6);
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			thead th {
-				background-color: #55608f;
-			}
-			tbody tr:hover {
-				background-color: rgba(255,255,255,0.3);
-			}
-			td {
-				position: relative;
-			}
-			td:hover:before {
-				content: "";
-				position: absolute;
-				left: 0;
-				right: 0;
-				top: -9999px;
-				bottom: -9999px;
-				background-color: rgba(255,255,255,0.2);
-				z-index: -1;
-			}
-		</style>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudsy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-pink: #ff7eb9;
+            --primary-blue: #7cc0ff;
+            --accent-pink: #ff65a3;
+            --accent-blue: #5e9fff;
+            --glass-dark: rgba(30, 33, 58, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+            --text-light: #f5f6fa;
+            --text-dim: rgba(245, 246, 250, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(-45deg, #1e203a, #252845, #2a2d54, #303865);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+            height: 90vh;
+			align-items: center;
+        }
+        
+        .card {
+            background: var(--glass-dark);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            padding: 24px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px) translateZ(0);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+        
+        .weekly-forecast {
+			align-items: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .current-weather {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hourly-forecast {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        h2, h3 {
+            color: var(--text-light);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--primary-blue));
+            border-radius: 3px;
+        }
+        
+        .weather-icon {
+            width: 105%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .current-temp {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-pink), var(--primary-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 8px 0;
+            text-shadow: 0 4px 12px rgba(124, 192, 255, 0.2);
+        }
+        
+        .weather-details {
+            margin: 16px 0;
+            width: 100%;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+        
+        .detail-value {
+            font-weight: 600;
+        }
+        
+        .radar-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .forecast-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        
+        .forecast-table th {
+            text-align: left;
+            padding: 12px 8px;
+            font-weight: 500;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .forecast-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .forecast-day {
+            font-weight: 600;
+        }
+        
+        .forecast-temp {
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .forecast-desc {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--text-dim);
+        }
+        
+        .hourly-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+            transition: background 0.2s ease;
+        }
+        
+        .hourly-row:hover {
+            background: var(--glass-highlight);
+        }
+        
+        .hourly-time {
+            font-weight: 500;
+            width: 80px;
+        }
+        
+        .hourly-temp {
+            font-weight: 600;
+            width: 60px;
+            text-align: center;
+            color: var(--primary-pink);
+        }
+        
+        .precip-chance {
+            display: flex;
+            align-items: center;
+            width: 100px;
+        }
+        
+        .precip-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-left: 8px;
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .precip-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            border-radius: 3px;
+        }
+        
+        .precip-value {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+        }
+        
+        .condition-highlight {
+            color: var(--primary-pink);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary-pink), var(--primary-blue));
+            border-radius: 3px;
+        }
+    </style>
+</head>
 	<body>
-		<div class="container">
-			<p><img src="loading.gif" alt="Loading, please wait"></p>
-		</div>
+		<center><div class="container">
+			<div class="weekly-forecast">
+				<p><img src="loading.gif" alt="Loading, please wait" class="radar-image"></p>
+			</div>
+		</div></center>
 		<!-- JavaScript to refresh the page every 10 minutes -->
 		<script>
 			setTimeout(function(){
@@ -640,306 +1062,636 @@ bash db/alertparser.sh
     cat <<EOF >db/frontEndraw.html
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Cloudsy</title>
-		<style>
-			body {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-				margin: 5px;
-				font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
-				background-color: lightgray;
-			}
-			.container {
-				background-color: white;
-				border: 5px solid white;
-				padding: 20px;
-				margin: 5px;
-				border-radius: 10px;
-				overflow: auto;
-				display: flex;
-				height: 90vh;
-				flex-direction: row;
-				justify-content: space-between;
-			}
-			.third {
-				width: 33%;
-			}
-			.half {
-				width: 25%;
-			}
-			.third2 {
-				width: 1%;
-			}
-			img {
-				max-width: 100%;
-				max-height: 100%;
-				margin-bottom: 20px;
-			}
-			.left-content {
-				display: inline-block;
-				text-align: center;
-				vertical-align: top; /* Align content at the top */
-				width: 40%; /* Adjust the width as needed */
-				margin-right: 3%; /* Add some margin between the left and right content */
-				margin-left: 3%; /* Add some margin between the left and right content */
-			}
-			.left-content2 {
-				display: inline-block;
-				text-align: left;
-				vertical-align: middle; /* Align content at the top */
-				width: 40%; /* Adjust the width as needed */
-				margin-right: 3%; /* Add some margin between the left and right content */
-				margin-left: 3%; /* Add some margin between the left and right content */
-			}
-			.table-container {
-				text-align: center;
-			}
-			table {
-				width: 100%;
-				border-collapse: collapse;
-				overflow: hidden;
-				box-shadow: 0 0 20px rgba(0,0,0,0.1);
-				margin: 0 auto;
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			th,
-			td {
-				padding: 10px;
-				background-color: rgba(255,255,255,0.2);
-				color: #000;
-			}
-			th {
-				text-align: left;
-				background-color: rgba(255,255,255,0.6);
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			thead th {
-				background-color: #55608f;
-			}
-			tbody tr:hover {
-				background-color: rgba(255,255,255,0.3);
-			}
-			td {
-				position: relative;
-			}
-			td:hover:before {
-				content: "";
-				position: absolute;
-				left: 0;
-				right: 0;
-				top: -9999px;
-				bottom: -9999px;
-				background-color: rgba(255,255,255,0.2);
-				z-index: -1;
-			}
-		</style>
-	</head>
-	<body id="hereisthealerttag">
-	<div class="container">
-		<div class="table-container third">
-			<h2>Weekly Forecast</h2>
-			<table border="1" style="width: 400px;">
-				<tr>
-					<th>$weeklyName1</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp1°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong1</td>
-				</tr>
-				<tr>
-					<th>$weeklyName2</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp2°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong2</td>
-				</tr>
-				<tr>
-					<th>$weeklyName3</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp3°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong3</td>
-				</tr>
-				<tr>
-					<th>$weeklyName4</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp4°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong4</td>
-				</tr>
-				<tr>
-					<th>$weeklyName5</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp5°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong5</td>
-				</tr>
-				<tr>
-					<th>$weeklyName6</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp6°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong6</td>
-				</tr>
-			</table>
-		</div>
-		<div class="left-content third">
-			<p><img src="logo.gif" alt="--Cloudsy--"></p>
-			<h3><center>NOAA Information</center></h3>
-			<p><strong><center>City Name:</strong> $currentcity</center></p>
-			<p><strong><center>Condition:</strong> $currentcondition</center></p>
-			<p><strong><center>Current Temp:</strong> $currenttemp°F</center></p>
-			<p><strong><center>Radar Station:</strong> $currentstation</center></p>
-			<img src="radar.gif" alt="Radar Image Unavailable">
-			<p style="max-width: 400px; margin: 0 auto; text-align: center;">$currentcond</center></p>
-		</div>
-		<div class="table-container third">
-			<h2>Hourly Forecast</h2>
-			<table border="1">
-				<tr>
-					<th>Local Time</th>
-					<th>Temperature</th>
-					<th>Precipitation Chance</th>
-				</tr>
-				<tr>
-					<td>$hourTime1</td>
-					<td>$hourTemp1a°F</td>
-					<td>$hourRain1a%</td>
-				</tr>
-				<tr>
-					<td>$hourTime2</td>
-					<td>$hourTemp2a°F</td>
-					<td>$hourRain2a%</td>
-				</tr>
-				<tr>
-					<td>$hourTime3</td>
-					<td>$hourTemp3a°F</td>
-					<td>$hourRain3a%</td>
-				</tr>
-				<tr>
-					<td>$hourTime4</td>
-					<td>$hourTemp4a°F</td>
-					<td>$hourRain4a%</td>
-				</tr>
-				<tr>
-					<td>$hourTime5</td>
-					<td>$hourTemp5a°F</td>
-					<td>$hourRain5a%</td>
-				</tr>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudsy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-pink: #ff7eb9;
+            --primary-blue: #7cc0ff;
+            --accent-pink: #ff65a3;
+            --accent-blue: #5e9fff;
+            --glass-dark: rgba(30, 33, 58, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+            --text-light: #f5f6fa;
+            --text-dim: rgba(245, 246, 250, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(-45deg, #1e203a, #252845, #2a2d54, #303865);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+            height: 90vh;
+        }
+        
+        .card {
+            background: var(--glass-dark);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            padding: 24px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px) translateZ(0);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+        
+        .weekly-forecast {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .current-weather {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hourly-forecast {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        h2, h3 {
+            color: var(--text-light);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--primary-blue));
+            border-radius: 3px;
+        }
+        
+        .weather-icon {
+            width: 105%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .current-temp {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-pink), var(--primary-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 8px 0;
+            text-shadow: 0 4px 12px rgba(124, 192, 255, 0.2);
+        }
+        
+        .weather-details {
+            margin: 16px 0;
+            width: 100%;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+        
+        .detail-value {
+            font-weight: 600;
+        }
+        
+        .radar-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .forecast-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        
+        .forecast-table th {
+            text-align: left;
+            padding: 12px 8px;
+            font-weight: 500;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .forecast-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .forecast-day {
+            font-weight: 600;
+        }
+        
+        .forecast-temp {
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .forecast-desc {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--text-dim);
+        }
+        
+        .hourly-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+            transition: background 0.2s ease;
+        }
+        
+        .hourly-row:hover {
+            background: var(--glass-highlight);
+        }
+        
+        .hourly-time {
+            font-weight: 500;
+            width: 80px;
+        }
+        
+        .hourly-temp {
+            font-weight: 600;
+            width: 60px;
+            text-align: center;
+            color: var(--primary-pink);
+        }
+        
+        .precip-chance {
+            display: flex;
+            align-items: center;
+            width: 100px;
+        }
+        
+        .precip-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-left: 8px;
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .precip-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            border-radius: 3px;
+        }
+        
+        .precip-value {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+        }
+        
+        .condition-highlight {
+            color: var(--primary-pink);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary-pink), var(--primary-blue));
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card weekly-forecast">
+            <h2>Weekly Forecast</h2>
+            <table class="forecast-table">
                 <tr>
-					<td>$hourTime6</td>
-					<td>$hourTemp6a°F</td>
-					<td>$hourRain6a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName1</td>
+                    <td class="forecast-temp">$weeklyTemp1°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime7</td>
-					<td>$hourTemp7a°F</td>
-					<td>$hourRain7a%</td>
-				</tr>
+                    <td colspan="2" class="forecast-desc">$weeklyLong1</td>
+                </tr>
                 <tr>
-					<td>$hourTime8</td>
-					<td>$hourTemp8a°F</td>
-					<td>$hourRain8a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName2</td>
+                    <td class="forecast-temp">$weeklyTemp2°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime9</td>
-					<td>$hourTemp9a°F</td>
-					<td>$hourRain9a%</td>
-				</tr>
+                    <td colspan="2" class="forecast-desc">$weeklyLong2</td>
+                </tr>
                 <tr>
-					<td>$hourTime10</td>
-					<td>$hourTemp10a°F</td>
-					<td>$hourRain10a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName3</td>
+                    <td class="forecast-temp">$weeklyTemp3°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime11</td>
-					<td>$hourTemp11a°F</td>
-					<td>$hourRain11a%</td>
-				</tr>
+                    <td colspan="2" class="forecast-desc">$weeklyLong3</td>
+                </tr>
                 <tr>
-					<td>$hourTime12</td>
-					<td>$hourTemp12a°F</td>
-					<td>$hourRain12a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName4</td>
+                    <td class="forecast-temp">$weeklyTemp4°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime13</td>
-					<td>$hourTemp13a°F</td>
-					<td>$hourRain13a%</td>
-				</tr>
+                    <td colspan="2" class="forecast-desc">$weeklyLong4</td>
+                </tr>
                 <tr>
-					<td>$hourTime14</td>
-					<td>$hourTemp14a°F</td>
-					<td>$hourRain14a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName5</td>
+                    <td class="forecast-temp">$weeklyTemp5°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime15</td>
-					<td>$hourTemp15a°F</td>
-					<td>$hourRain15a%</td>
-				</tr>
+                    <td colspan="2" class="forecast-desc">$weeklyLong5</td>
+                </tr>
                 <tr>
-					<td>$hourTime16</td>
-					<td>$hourTemp16a°F</td>
-					<td>$hourRain16a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName6</td>
+                    <td class="forecast-temp">$weeklyTemp6°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime17</td>
-					<td>$hourTemp17a°F</td>
-					<td>$hourRain17a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime18</td>
-					<td>$hourTemp18a°F</td>
-					<td>$hourRain18a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime19</td>
-					<td>$hourTemp19a°F</td>
-					<td>$hourRain19a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime20</td>
-					<td>$hourTemp20a°F</td>
-					<td>$hourRain20a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime21</td>
-					<td>$hourTemp21a°F</td>
-					<td>$hourRain21a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime22</td>
-					<td>$hourTemp22a°F</td>
-					<td>$hourRain22a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime23</td>
-					<td>$hourTemp23a°F</td>
-					<td>$hourRain23a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime24</td>
-					<td>$hourTemp24a°F</td>
-					<td>$hourRain24a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime25</td>
-					<td>$hourTemp25a°F</td>
-					<td>$hourRain25a%</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-<!-- JavaScript to refresh the page every 10 minutes -->
-	<script>
-		setTimeout(function(){
-			location.reload();
-		}, 610000); // Refresh every 10 minutes (600,000 milliseconds)
-	</script>
+                    <td colspan="2" class="forecast-desc">$weeklyLong6</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="card current-weather">
+            <img src="logo.gif" alt="Cloudsy" class="weather-icon">
+            <div class="current-temp">$currenttemp°F</div>
+            <h3>$currentcity</h3>
+            <p><span class="condition-highlight">$currentcondition</span></p>
+            
+            <div class="weather-details">
+                <div class="detail-row">
+                    <span class="detail-label">Radar Station</span>
+                    <span class="detail-value">$currentstation</span>
+                </div>
+            </div>
+            
+            <img src="radar.gif" alt="Radar Image Unavailable" class="radar-image">
+            
+            <p style="font-size: 0.9rem; color: var(--text-dim); margin-top: 8px;">
+                $currentcond
+            </p>
+        </div>
+        
+        <div class="card hourly-forecast">
+            <h2>Hourly Forecast</h2>
+            <div class="hourly-scroll">
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime1</span>
+                    <span class="hourly-temp">$hourTemp1a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain1a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain1a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime2</span>
+                    <span class="hourly-temp">$hourTemp2a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain2a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain2a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime3</span>
+                    <span class="hourly-temp">$hourTemp3a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain3a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain3a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime4</span>
+                    <span class="hourly-temp">$hourTemp4a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain4a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain4a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime5</span>
+                    <span class="hourly-temp">$hourTemp5a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain5a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain5a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime6</span>
+                    <span class="hourly-temp">$hourTemp6a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain6a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain6a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime7</span>
+                    <span class="hourly-temp">$hourTemp7a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain7a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain7a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime8</span>
+                    <span class="hourly-temp">$hourTemp8a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain8a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain8a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime9</span>
+                    <span class="hourly-temp">$hourTemp9a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain9a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain9a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime10</span>
+                    <span class="hourly-temp">$hourTemp10a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain10a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain10a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime11</span>
+                    <span class="hourly-temp">$hourTemp11a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain11a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain11a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime12</span>
+                    <span class="hourly-temp">$hourTemp12a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain12a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain12a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime13</span>
+                    <span class="hourly-temp">$hourTemp13a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain13a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain13a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime14</span>
+                    <span class="hourly-temp">$hourTemp14a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain14a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain14a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime15</span>
+                    <span class="hourly-temp">$hourTemp15a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain15a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain15a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime16</span>
+                    <span class="hourly-temp">$hourTemp16a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain16a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain16a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime17</span>
+                    <span class="hourly-temp">$hourTemp17a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain17a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain17a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime18</span>
+                    <span class="hourly-temp">$hourTemp18a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain18a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain18a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime19</span>
+                    <span class="hourly-temp">$hourTemp19a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain19a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain19a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime20</span>
+                    <span class="hourly-temp">$hourTemp20a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain20a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain20a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime21</span>
+                    <span class="hourly-temp">$hourTemp21a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain21a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain21a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime22</span>
+                    <span class="hourly-temp">$hourTemp22a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain22a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain22a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime23</span>
+                    <span class="hourly-temp">$hourTemp23a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain23a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain23a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime24</span>
+                    <span class="hourly-temp">$hourTemp24a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain24a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain24a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime25</span>
+                    <span class="hourly-temp">$hourTemp25a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain25a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain25a%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to refresh the page every 10 minutes -->
+    <script>
+        setTimeout(function(){
+            location.reload();
+        }, 610000); // Refresh every 10 minutes (600,000 milliseconds)
+        
+        // Add animation to cards on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
 </body>
 </html>
 
@@ -950,295 +1702,636 @@ EOF
     cat <<EOF >db/frontEndmobileraw.html
 <!DOCTYPE html>
 <html lang="en">
-	<head id="mobile">
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Cloudsy</title>
-		<style>
-			body {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-				margin: 5px;
-				font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
-				background-color: lightgray;
-			}
-			.container {
-				background-color: white;
-				border: 5px solid white;
-				padding: 20px;
-				margin: 5px;
-				border-radius: 10px;
-				overflow: auto;
-				display: flex;
-				height: 90vh;
-				flex-direction: column;
-				justify-content: space-between;
-			}
-			.third {
-				width: 100%;
-			}
-			.half {
-				width: 100%;
-			}
-			img {
-				max-width: 100%;
-				max-height: 100%;
-				margin-bottom: 20px;
-			}
-			.left-content {
-				display: inline-block;
-				text-align: center;
-				vertical-align: top; /* Align content at the top */
-				width: 40%; /* Adjust the width as needed */
-				margin-right: 3%; /* Add some margin between the left and right content */
-				margin-left: 3%; /* Add some margin between the left and right content */
-			}
-			.table-container {
-				text-align: center;
-			}
-			table {
-				width: 100%;
-				border-collapse: collapse;
-				overflow: hidden;
-				box-shadow: 0 0 20px rgba(0,0,0,0.1);
-				margin: 0 auto;
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			th,
-			td {
-				padding: 10px;
-				background-color: rgba(255,255,255,0.2);
-				color: #000;
-			}
-			th {
-				text-align: left;
-				background-color: rgba(255,255,255,0.6);
-				background: linear-gradient(45deg, #e4b5d9, #abd4f2);
-			}
-			thead th {
-				background-color: #55608f;
-			}
-			tbody tr:hover {
-				background-color: rgba(255,255,255,0.3);
-			}
-			td {
-				position: relative;
-			}
-			td:hover:before {
-				content: "";
-				position: absolute;
-				left: 0;
-				right: 0;
-				top: -9999px;
-				bottom: -9999px;
-				background-color: rgba(255,255,255,0.2);
-				z-index: -1;
-			}
-		</style>
-	</head>
-	<body id="hereisthealerttag">
-		<div class="container">
-		<div class="table-container third">
-			<p><img src="logo.gif" alt="--Cloudsy--"></p>
-			<h3><center>NOAA Information</center></h3>
-			<p><strong><center>City Name:</strong> $currentcity</center></p>
-			<p><strong><center>Condition:</strong> $currentcondition</center></p>
-			<p><strong><center>Current Temp:</strong> $currenttemp°F</center></p>
-			<p><strong><center>Radar Station:</strong> $currentstation</center></p>
-			<img src="radar.gif" alt="Radar Image Unavailable">
-			<p style="max-width: 400px; margin: 0 auto; text-align: center;">$currentcond</center></p>
-		</div>
-		<div class="table-container third">
-			<h2>Weekly Forecast</h2>
-			<table border="1" style="width: 400px;">
-				<tr>
-					<th>$weeklyName1</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp1°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong1</td>
-				</tr>
-				<tr>
-					<th>$weeklyName2</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp2°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong2</td>
-				</tr>
-				<tr>
-					<th>$weeklyName3</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp3°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong3</td>
-				</tr>
-				<tr>
-					<th>$weeklyName4</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp4°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong4</td>
-				</tr>
-				<tr>
-					<th>$weeklyName5</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp5°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong5</td>
-				</tr>
-				<tr>
-					<th>$weeklyName6</th>
-					<th style="text-align: right; font-weight: normal;">$weeklyTemp6°F</th>
-				</tr>
-				<tr style="height:100px">
-					<td colspan="2" style="text-align: left;">$weeklyLong6</td>
-				</tr>
-			</table>
-		</div>
-		<div class="table-container third">
-			<h2>Hourly Forecast</h2>
-			<table border="1">
-				<tr>
-					<th>Local Time</th>
-					<th>Temperature</th>
-					<th>Precipitation Chance</th>
-				</tr>
-				<tr>
-					<td>$hourTime1</td>
-					<td>$hourTemp1a°F</td>
-					<td>$hourRain1a%</td>
-				</tr>
-				<tr>
-					<td>$hourTime2</td>
-					<td>$hourTemp2a°F</td>
-					<td>$hourRain2a%</td>
-				</tr>
-				<tr>
-					<td>$hourTime3</td>
-					<td>$hourTemp3a°F</td>
-					<td>$hourRain3a%</td>
-				</tr>
-				<tr>
-					<td>$hourTime4</td>
-					<td>$hourTemp4a°F</td>
-					<td>$hourRain4a%</td>
-				</tr>
-				<tr>
-					<td>$hourTime5</td>
-					<td>$hourTemp5a°F</td>
-					<td>$hourRain5a%</td>
-				</tr>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudsy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-pink: #ff7eb9;
+            --primary-blue: #7cc0ff;
+            --accent-pink: #ff65a3;
+            --accent-blue: #5e9fff;
+            --glass-dark: rgba(30, 33, 58, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+            --text-light: #f5f6fa;
+            --text-dim: rgba(245, 246, 250, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(-45deg, #1e203a, #252845, #2a2d54, #303865);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            display: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+            height: 90vh;
+        }
+        
+        .card {
+            background: var(--glass-dark);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            padding: 24px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px) translateZ(0);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+        
+        .weekly-forecast {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .current-weather {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hourly-forecast {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        h2, h3 {
+            color: var(--text-light);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--primary-blue));
+            border-radius: 3px;
+        }
+        
+        .weather-icon {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .current-temp {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-pink), var(--primary-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 8px 0;
+            text-shadow: 0 4px 12px rgba(124, 192, 255, 0.2);
+        }
+        
+        .weather-details {
+            margin: 16px 0;
+            width: 100%;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+        
+        .detail-value {
+            font-weight: 600;
+        }
+        
+        .radar-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .forecast-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        
+        .forecast-table th {
+            text-align: left;
+            padding: 12px 8px;
+            font-weight: 500;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .forecast-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .forecast-day {
+            font-weight: 600;
+        }
+        
+        .forecast-temp {
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .forecast-desc {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--text-dim);
+        }
+        
+        .hourly-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+            transition: background 0.2s ease;
+        }
+        
+        .hourly-row:hover {
+            background: var(--glass-highlight);
+        }
+        
+        .hourly-time {
+            font-weight: 500;
+            width: 80px;
+        }
+        
+        .hourly-temp {
+            font-weight: 600;
+            width: 60px;
+            text-align: center;
+            color: var(--primary-pink);
+        }
+        
+        .precip-chance {
+            display: flex;
+            align-items: center;
+            width: 100px;
+        }
+        
+        .precip-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-left: 8px;
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .precip-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            border-radius: 3px;
+        }
+        
+        .precip-value {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+        }
+        
+        .condition-highlight {
+            color: var(--primary-pink);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary-pink), var(--primary-blue));
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card current-weather">
+            <img src="logo.gif" alt="Cloudsy" class="weather-icon">
+            <div class="current-temp">$currenttemp°F</div>
+            <h3>$currentcity</h3>
+            <p><span class="condition-highlight">$currentcondition</span></p>
+            
+            <div class="weather-details">
+                <div class="detail-row">
+                    <span class="detail-label">Radar Station</span>
+                    <span class="detail-value">$currentstation</span>
+                </div>
+            </div>
+            
+            <img src="radar.gif" alt="Radar Image Unavailable" class="radar-image">
+            
+            <p style="font-size: 0.9rem; color: var(--text-dim); margin-top: 8px;">
+                $currentcond
+            </p>
+        </div>
+		
+		<div class="card weekly-forecast">
+            <h2>Weekly Forecast</h2>
+            <table class="forecast-table">
                 <tr>
-					<td>$hourTime6</td>
-					<td>$hourTemp6a°F</td>
-					<td>$hourRain6a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName1</td>
+                    <td class="forecast-temp">$weeklyTemp1°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime7</td>
-					<td>$hourTemp7a°F</td>
-					<td>$hourRain7a%</td>
-				</tr>
+                    <td colspan="2" class="forecast-desc">$weeklyLong1</td>
+                </tr>
                 <tr>
-					<td>$hourTime8</td>
-					<td>$hourTemp8a°F</td>
-					<td>$hourRain8a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName2</td>
+                    <td class="forecast-temp">$weeklyTemp2°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime9</td>
-					<td>$hourTemp9a°F</td>
-					<td>$hourRain9a%</td>
-				</tr>
+                    <td colspan="2" class="forecast-desc">$weeklyLong2</td>
+                </tr>
                 <tr>
-					<td>$hourTime10</td>
-					<td>$hourTemp10a°F</td>
-					<td>$hourRain10a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName3</td>
+                    <td class="forecast-temp">$weeklyTemp3°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime11</td>
-					<td>$hourTemp11a°F</td>
-					<td>$hourRain11a%</td>
-				</tr>
+                    <td colspan="2" class="forecast-desc">$weeklyLong3</td>
+                </tr>
                 <tr>
-					<td>$hourTime12</td>
-					<td>$hourTemp12a°F</td>
-					<td>$hourRain12a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName4</td>
+                    <td class="forecast-temp">$weeklyTemp4°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime13</td>
-					<td>$hourTemp13a°F</td>
-					<td>$hourRain13a%</td>
-				</tr>
+                    <td colspan="2" class="forecast-desc">$weeklyLong4</td>
+                </tr>
                 <tr>
-					<td>$hourTime14</td>
-					<td>$hourTemp14a°F</td>
-					<td>$hourRain14a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName5</td>
+                    <td class="forecast-temp">$weeklyTemp5°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime15</td>
-					<td>$hourTemp15a°F</td>
-					<td>$hourRain15a%</td>
-				</tr>
+                    <td colspan="2" class="forecast-desc">$weeklyLong5</td>
+                </tr>
                 <tr>
-					<td>$hourTime16</td>
-					<td>$hourTemp16a°F</td>
-					<td>$hourRain16a%</td>
-				</tr>
+                    <td class="forecast-day">$weeklyName6</td>
+                    <td class="forecast-temp">$weeklyTemp6°F</td>
+                </tr>
                 <tr>
-					<td>$hourTime17</td>
-					<td>$hourTemp17a°F</td>
-					<td>$hourRain17a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime18</td>
-					<td>$hourTemp18a°F</td>
-					<td>$hourRain18a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime19</td>
-					<td>$hourTemp19a°F</td>
-					<td>$hourRain19a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime20</td>
-					<td>$hourTemp20a°F</td>
-					<td>$hourRain20a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime21</td>
-					<td>$hourTemp21a°F</td>
-					<td>$hourRain21a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime22</td>
-					<td>$hourTemp22a°F</td>
-					<td>$hourRain22a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime23</td>
-					<td>$hourTemp23a°F</td>
-					<td>$hourRain23a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime24</td>
-					<td>$hourTemp24a°F</td>
-					<td>$hourRain24a%</td>
-				</tr>
-                <tr>
-					<td>$hourTime25</td>
-					<td>$hourTemp25a°F</td>
-					<td>$hourRain25a%</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-<!-- JavaScript to refresh the page every 10 minutes -->
-	<script>
-		setTimeout(function(){
-			location.reload();
-		}, 610000); // Refresh every 10 minutes (600,000 milliseconds)
-	</script>
+                    <td colspan="2" class="forecast-desc">$weeklyLong6</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="card hourly-forecast">
+            <h2>Hourly Forecast</h2>
+            <div class="hourly-scroll">
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime1</span>
+                    <span class="hourly-temp">$hourTemp1a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain1a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain1a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime2</span>
+                    <span class="hourly-temp">$hourTemp2a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain2a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain2a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime3</span>
+                    <span class="hourly-temp">$hourTemp3a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain3a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain3a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime4</span>
+                    <span class="hourly-temp">$hourTemp4a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain4a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain4a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime5</span>
+                    <span class="hourly-temp">$hourTemp5a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain5a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain5a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime6</span>
+                    <span class="hourly-temp">$hourTemp6a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain6a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain6a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime7</span>
+                    <span class="hourly-temp">$hourTemp7a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain7a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain7a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime8</span>
+                    <span class="hourly-temp">$hourTemp8a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain8a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain8a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime9</span>
+                    <span class="hourly-temp">$hourTemp9a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain9a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain9a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime10</span>
+                    <span class="hourly-temp">$hourTemp10a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain10a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain10a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime11</span>
+                    <span class="hourly-temp">$hourTemp11a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain11a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain11a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime12</span>
+                    <span class="hourly-temp">$hourTemp12a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain12a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain12a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime13</span>
+                    <span class="hourly-temp">$hourTemp13a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain13a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain13a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime14</span>
+                    <span class="hourly-temp">$hourTemp14a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain14a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain14a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime15</span>
+                    <span class="hourly-temp">$hourTemp15a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain15a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain15a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime16</span>
+                    <span class="hourly-temp">$hourTemp16a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain16a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain16a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime17</span>
+                    <span class="hourly-temp">$hourTemp17a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain17a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain17a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime18</span>
+                    <span class="hourly-temp">$hourTemp18a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain18a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain18a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime19</span>
+                    <span class="hourly-temp">$hourTemp19a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain19a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain19a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime20</span>
+                    <span class="hourly-temp">$hourTemp20a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain20a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain20a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime21</span>
+                    <span class="hourly-temp">$hourTemp21a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain21a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain21a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime22</span>
+                    <span class="hourly-temp">$hourTemp22a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain22a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain22a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime23</span>
+                    <span class="hourly-temp">$hourTemp23a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain23a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain23a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime24</span>
+                    <span class="hourly-temp">$hourTemp24a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain24a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain24a%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hourly-row">
+                    <span class="hourly-time">$hourTime25</span>
+                    <span class="hourly-temp">$hourTemp25a°F</span>
+                    <div class="precip-chance">
+                        <span class="precip-value">$hourRain25a%</span>
+                        <div class="precip-bar">
+                            <div class="precip-fill" style="width: $hourRain25a%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to refresh the page every 10 minutes -->
+    <script>
+        setTimeout(function(){
+            location.reload();
+        }, 610000); // Refresh every 10 minutes (600,000 milliseconds)
+        
+        // Add animation to cards on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
 </body>
 </html>
 
