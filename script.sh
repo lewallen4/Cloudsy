@@ -1113,6 +1113,15 @@ bash db/alertparser.sh
             max-width: 1400px;
             height: 90vh;
         }
+		
+				        .containerhalf {
+            display: column;
+            gap: 20px;
+            width: 30%;
+            max-width: 1400px;
+            height: 90vh;
+			padding: 20px;
+        }
         
         .card {
             background: var(--glass-dark);
@@ -1348,7 +1357,7 @@ bash db/alertparser.sh
         }
     </style>
 </head>
-<body>
+<body id="hereisthealerttag">
     <div class="container">
         <div class="card weekly-forecast">
             <h2>Weekly Forecast</h2>
@@ -1753,6 +1762,15 @@ EOF
             max-width: 1400px;
             height: 90vh;
         }
+		
+		        .containerhalf {
+            display: column;
+            gap: 20px;
+            width: 30%;
+            max-width: 1400px;
+            height: 90vh;
+			padding: 20px;
+        }
         
         .card {
             background: var(--glass-dark);
@@ -1988,7 +2006,7 @@ EOF
         }
     </style>
 </head>
-<body>
+<body id="hereisthealerttag">
     <div class="container">
         <div class="card current-weather">
             <img src="logo.gif" alt="Cloudsy" class="weather-icon">
@@ -2346,7 +2364,7 @@ if (( $(wc -l < db/activealerts.txt) > 13 )); then
 sed -i -E 's/\\n\\n/\n/g; s/\\n/ /g' db/activealerts.txt
 sed -i '9,$s/\(.*\)/<p>\1<\/p>/' db/activealerts.txt
 sed -i '1i<div>' db/activealerts.txt
-sed -i '1i<div class="container half">' db/activealerts.txt
+sed -i '1i<div class="containerhalf">' db/activealerts.txt
 echo '</div>' >> db/activealerts.txt
 echo '</div>' >> db/activealerts.txt
 
