@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudsy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-pink: #ff7eb9;
+            --primary-blue: #7cc0ff;
+            --accent-pink: #ff65a3;
+            --accent-blue: #5e9fff;
+            --glass-dark: rgba(30, 33, 58, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+            --text-light: #f5f6fa;
+            --text-dim: rgba(245, 246, 250, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(-45deg, #1e203a, #252845, #2a2d54, #303865);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+            height: 90vh;
+			align-items: center;
+        }
+        
+        .card {
+            background: var(--glass-dark);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            padding: 24px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px) translateZ(0);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+        
+        .weekly-forecast {
+			align-items: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .current-weather {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hourly-forecast {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        h2, h3 {
+            color: var(--text-light);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--primary-blue));
+            border-radius: 3px;
+        }
+        
+        .weather-icon {
+            width: 105%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .current-temp {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-pink), var(--primary-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 8px 0;
+            text-shadow: 0 4px 12px rgba(124, 192, 255, 0.2);
+        }
+        
+        .weather-details {
+            margin: 16px 0;
+            width: 100%;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+        
+        .detail-value {
+            font-weight: 600;
+        }
+        
+        .radar-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin: 16px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .forecast-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        
+        .forecast-table th {
+            text-align: left;
+            padding: 12px 8px;
+            font-weight: 500;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .forecast-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .forecast-day {
+            font-weight: 600;
+        }
+        
+        .forecast-temp {
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .forecast-desc {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--text-dim);
+        }
+        
+        .hourly-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+            transition: background 0.2s ease;
+        }
+        
+        .hourly-row:hover {
+            background: var(--glass-highlight);
+        }
+        
+        .hourly-time {
+            font-weight: 500;
+            width: 80px;
+        }
+        
+        .hourly-temp {
+            font-weight: 600;
+            width: 60px;
+            text-align: center;
+            color: var(--primary-pink);
+        }
+        
+        .precip-chance {
+            display: flex;
+            align-items: center;
+            width: 100px;
+        }
+        
+        .precip-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-left: 8px;
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .precip-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            border-radius: 3px;
+        }
+        
+        .precip-value {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+        }
+        
+        .condition-highlight {
+            color: var(--primary-pink);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary-pink), var(--primary-blue));
+            border-radius: 3px;
+        }
+    </style>
+</head>
+	<body>
+		<center><div class="container">
+			<div class="weekly-forecast">
+				<p><img src="loading.gif" alt="Loading, please wait" class="radar-image"></p>
+			</div>
+		</div></center>
+		<!-- JavaScript to refresh the page every 10 minutes -->
+		<script>
+			setTimeout(function(){
+				location.reload();
+			}, 6000); // Refresh every 10 minutes (600,000 milliseconds)
+		</script>
+	</body>
+</html>
+
+
