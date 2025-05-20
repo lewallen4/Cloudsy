@@ -11,7 +11,6 @@ jobs:
     - name: Update and Upgrade
       run: |
         sudo apt update
-        sudo apt upgrade
         sudo chmod 777 script.sh
         bash script.sh -z 98102
 
