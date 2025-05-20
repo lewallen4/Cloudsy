@@ -1,0 +1,21 @@
+name: Job Run
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Update and Upgrade
+      run: |
+        sudo apt update
+        sudo bash script.sh -z 98102
+
+    - name: Upload back to Git
+      run: |
+        echo "test upload"
+
+    - name: Run Neofetch for test
+      run: sudo neofetch
