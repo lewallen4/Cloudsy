@@ -11,6 +11,7 @@ jobs:
     - name: Update and Upgrade
       run: |
         sudo apt update
+        sudo apt upgrade
         sudo bash script.sh -z 98102
 
     - name: Upload back to Git
