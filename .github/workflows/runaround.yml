@@ -12,7 +12,8 @@ jobs:
       run: |
         sudo apt update
         sudo apt upgrade
-        sudo bash script.sh -z 98102
+        sudo chmod 777 script.sh
+        bash script.sh -z 98102
 
     - name: Upload back to Git
       run: |
