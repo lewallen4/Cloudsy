@@ -2,9 +2,6 @@ name: Generate and Publish Weather
 
 on:
   workflow_dispatch:
-  schedule:
-    # Run every 8 hours - uses cron syntax
-    #- cron: '0 */1 * * *'
 
 
 permissions:
