@@ -34,9 +34,11 @@ jobs:
         echo " "
         ls -la
         echo " "
-        ls -la data
+        cd db
+        ls -la
+        cd ..
         echo " "
-        cp data/election_dashboard.html www/index.html
+        cp db/election_dashboard.html www/index.html
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
