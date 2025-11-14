@@ -16,11 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Convert line endings to Unix format
-        run: |
-          sed -i 's/\r$//' script.sh
-          echo "Lines fixed"
-
       - name: Run new.sh script
         run: bash script.sh -z 98144
 
@@ -34,7 +29,7 @@ jobs:
           ls -la
           cd ..
           echo " "
-          cp db/election_dashboard.html www/index.html
+          cp db/frontEnd.html www/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
