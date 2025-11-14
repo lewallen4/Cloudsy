@@ -25,13 +25,6 @@ jobs:
       - name: move page for web upload
         run: |
           mkdir www
-          echo " "
-          ls -la
-          echo " "
-          cd db
-          ls -la
-          cd ..
-          echo " "
           cp db/frontEnd.html www/index.html
 
       - name: Setup Pages
