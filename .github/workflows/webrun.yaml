@@ -3,7 +3,6 @@ name: Generate and Publish Weather
 on:
   workflow_dispatch:
 
-
 permissions:
   contents: read
   pages: write
@@ -14,38 +13,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Convert line endings to Unix format
-      run: |
-        sed -i 's/\r$//' script.sh
-        echo "Lines fixed"
-      
-    - name: Run new.sh script
-      run: bash script.sh -z 98144
+      - name: Convert line endings to Unix format
+        run: |
+          sed -i 's/\r$//' script.sh
+          echo "Lines fixed"
 
-    - name: Let file finish being created
-      run: |       
-        mkdir www
-        echo " "
-        ls -la
-        echo " "
-        cd db
-        ls -la
-        cd ..
-        echo " "
-        cp db/election_dashboard.html www/index.html
+      - name: Run new.sh script
+        run: bash script.sh -z 98144
 
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
+      - name: Let file finish being created
+        run: |
+          mkdir www
+          echo " "
+          ls -la
+          echo " "
+          cd db
+          ls -la
+          cd ..
+          echo " "
+          cp db/election_dashboard.html www/index.html
 
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        # Upload only the specific file or directory containing your site
-        path: www/  # or the directory where it's located, e.g., "./"
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: www/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
