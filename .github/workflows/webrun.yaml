@@ -26,6 +26,8 @@ jobs:
         run: |
           mkdir www
           cp db/frontEnd.html www/index.html
+          cp db/logo.gif www/logo.gif
+          cp db/radar.gif www/radar.gif
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
