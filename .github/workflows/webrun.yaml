@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run new.sh script
+        timeout-minutes: 1
         run: |
           bash script.sh -z 98144
 
