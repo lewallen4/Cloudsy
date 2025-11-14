@@ -1,1 +1,52 @@
-test
+name: Generate and Publish Weather
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run every 8 hours - uses cron syntax
+    #- cron: '0 */1 * * *'
+
+# 1. Set permissions at the workflow level for the GITHUB_TOKEN
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Convert line endings to Unix format
+      run: |
+        sed -i 's/\r$//' script.sh
+        echo "Lines fixed"
+      
+    - name: Run new.sh script
+      run: bash script.sh -z 98144
+
+    - name: Let file finish being created
+      run: |       
+        mkdir www
+        echo " "
+        ls -la
+        echo " "
+        ls -la data
+        echo " "
+        cp data/election_dashboard.html www/index.html
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        # Upload only the specific file or directory containing your site
+        path: www/  # or the directory where it's located, e.g., "./"
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
