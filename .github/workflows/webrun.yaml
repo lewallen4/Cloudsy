@@ -16,12 +16,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run new.sh script
+      - name: Run weather script
         timeout-minutes: 1
         run: |
           bash script.sh -z 98144
 
-      - name: Let file finish being created
+      - name: move page for web upload
         run: |
           mkdir www
           echo " "
