@@ -18,11 +18,7 @@ jobs:
 
       - name: Run new.sh script
         run: |
-          sudo apt update
-          sudo apt-get update
-          sudo apt full-upgrade -y
-          sudo apt-get upgrade -y
-          bash script.sh -z 98144
+          script -q -e -c "bash script.sh -z 98144"
 
       - name: Let file finish being created
         run: |
