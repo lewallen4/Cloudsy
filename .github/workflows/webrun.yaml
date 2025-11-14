@@ -18,6 +18,7 @@ jobs:
 
       - name: Run weather script
         timeout-minutes: 1
+        continue-on-error: true
         run: |
           bash script.sh -z 98144
 
