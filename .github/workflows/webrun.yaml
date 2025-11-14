@@ -1,6 +1,8 @@
 name: Generate and Publish Weather
 
 on:
+  schedule:
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
