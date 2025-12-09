@@ -47,9 +47,22 @@ jobs:
       - name: move page for web upload
         run: |
           mkdir www/aus
-          cp db/frontEnd.html www/aus/index.html
+          cp db/frontEndmobile.html www/aus/index.html
           cp db/logo.gif www/aus/logo.gif
           cp db/radar.gif www/aus/radar.gif
+
+      - name: Run weather script WILD
+        timeout-minutes: 1
+        continue-on-error: true
+        run: |
+          bash script.sh -z 10101
+
+      - name: move page for web upload
+        run: |
+          mkdir www/wild
+          cp db/frontEndmobile.html www/wild/index.html
+          cp db/logo.gif www/wild/logo.gif
+          cp db/radar.gif www/wild/radar.gif
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
