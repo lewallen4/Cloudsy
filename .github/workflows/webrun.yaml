@@ -31,6 +31,19 @@ jobs:
           cp db/logo.gif www/logo.gif
           cp db/radar.gif www/radar.gif
 
+      - name: Run weather script
+        timeout-minutes: 1
+        continue-on-error: true
+        run: |
+          bash script.sh -z 78702
+
+      - name: move page for web upload
+        run: |
+          mkdir www/aus
+          cp db/frontEnd.html www/aus/index.html
+          cp db/logo.gif www/aus/logo.gif
+          cp db/radar.gif www/aus/radar.gif
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
