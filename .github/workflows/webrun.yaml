@@ -27,7 +27,7 @@ jobs:
       - name: move page for web upload
         run: |
           mkdir www
-          cp db/frontEnd.html www/index.html
+          cp db/frontEndmobile.html www/index.html
           cp db/logo.gif www/logo.gif
           cp db/radar.gif www/radar.gif
 
