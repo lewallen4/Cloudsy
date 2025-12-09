@@ -27,9 +27,16 @@ jobs:
       - name: move page for web upload
         run: |
           mkdir www
-          cp db/frontEndmobile.html www/index.html
+          cp db/frontEnd.html www/index.html
           cp db/logo.gif www/logo.gif
           cp db/radar.gif www/radar.gif
+
+      - name: move page for web upload
+        run: |
+          mkdir www/mobile
+          cp db/frontEndmobile.html www/mobile/index.html
+          cp db/logo.gif www/mobile/logo.gif
+          cp db/radar.gif www/mobile/radar.gif
 
       - name: Run weather script AUS
         timeout-minutes: 1
