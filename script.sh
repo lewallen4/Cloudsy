@@ -2369,6 +2369,8 @@ echo '</div>' >> db/activealerts.txt
 echo '</div>' >> db/activealerts.txt
 
 
+
+
 # Find the line number of the exact match.
 line=$(grep -n '<body id="hereisthealerttag">$' db/frontEndraw.html | cut -d: -f1)
 
@@ -2387,6 +2389,29 @@ if [ -n "$line" ]; then
 
   # Replace the original file with the updated file.
   mv "$tmpfile" db/frontEndraw.html
+fi
+
+
+
+
+# Find the line number of the exact match mobile.
+line=$(grep -n '<body id="hereisthealerttag">$' db/frontEndmobileraw.html | cut -d: -f1)
+
+if [ -n "$line" ]; then
+  # Create a temporary file.
+  tmpfile2=$(mktemp)
+
+  # Write the lines up to (and including) the matching line.
+  head -n "$line" db/frontEndmobileraw.html > "$tmpfile2"
+
+  # Append the contents of db/activealerts.txt.
+  cat db/activealerts.txt >> "$tmpfile2"
+
+  # Append the remainder of the file.
+  tail -n +$((line + 1)) db/frontEndmobileraw.html >> "$tmpfile2"
+
+  # Replace the original file with the updated file.
+  mv "$tmpfile2" db/frontEndmobileraw.html
 fi
 
 fi
