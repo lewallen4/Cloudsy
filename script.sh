@@ -1743,7 +1743,7 @@ EOF
             animation: gradientBG 15s ease infinite;
             color: var(--text-light);
             min-height: 100vh;
-            display: flex;
+            display: grid;
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -1766,9 +1766,9 @@ EOF
 		        .containerhalf {
             display: column;
             gap: 20px;
-            width: 30%;
-            max-width: 1400px;
-            height: 90vh;
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
 			padding: 20px;
         }
         
