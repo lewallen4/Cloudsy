@@ -18,20 +18,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run weather script for SEA
+      - name: Run Desktop weather script for SEA
         timeout-minutes: 1
         continue-on-error: true
         run: |
           bash script.sh -z 98144
 
-      - name: move Index for web upload
+      - name: move SEA Index for web upload
         run: |
           mkdir www
           cp db/frontEnd.html www/index.html
           cp db/logo.gif www/logo.gif
           cp db/radar.gif www/radar.gif
 
-      - name: move Mobile for web upload
+      - name: move SEA Mobile for web upload
         run: |
           mkdir www/mobile
           cp db/frontEndmobile.html www/mobile/index.html
