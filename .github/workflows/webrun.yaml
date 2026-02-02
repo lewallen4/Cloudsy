@@ -65,19 +65,6 @@ jobs:
           cp db/radar.gif www/wild/radar.gif
 
 
-      - name: Run weather script LA
-        timeout-minutes: 1
-        continue-on-error: true
-        run: |
-          bash script.sh -z 90621
-
-      - name: move LA for web upload
-        run: |
-          mkdir www/LA
-          cp db/frontEndmobile.html www/LA/index.html
-          cp db/logo.gif www/LA/logo.gif
-          cp db/radar.gif www/LA/radar.gif
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
