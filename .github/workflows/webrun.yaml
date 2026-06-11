@@ -2,7 +2,7 @@ name: Generate and Publish Weather
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -55,7 +55,7 @@ jobs:
         timeout-minutes: 1
         continue-on-error: true
         run: |
-          bash script.sh -z 78641
+          bash script.sh -z 60411
 
       - name: move Wild for web upload
         run: |
