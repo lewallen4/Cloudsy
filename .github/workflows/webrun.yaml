@@ -39,11 +39,24 @@ jobs:
           cp db/logo.gif www/mobile/logo.gif
           cp db/radar.gif www/mobile/radar.gif
 
-      - name: Run weather script AUS
+      - name: Run weather script Bai
         timeout-minutes: 1
         continue-on-error: true
         run: |
           bash script.sh -z 98110
+
+      - name: move BAI for web upload
+        run: |
+          mkdir www/bai
+          cp db/frontEndmobile.html www/bai/index.html
+          cp db/logo.gif www/bai/logo.gif
+          cp db/radar.gif www/bai/radar.gif
+
+      - name: Run weather script AUS
+        timeout-minutes: 1
+        continue-on-error: true
+        run: |
+          bash script.sh -z 78737
 
       - name: move AUS for web upload
         run: |
@@ -51,6 +64,7 @@ jobs:
           cp db/frontEndmobile.html www/aus/index.html
           cp db/logo.gif www/aus/logo.gif
           cp db/radar.gif www/aus/radar.gif
+
 
       - name: Run weather script WILD
         timeout-minutes: 1
