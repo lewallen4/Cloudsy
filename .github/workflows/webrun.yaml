@@ -39,7 +39,7 @@ jobs:
           cp db/logo.gif www/mobile/logo.gif
           cp db/radar.gif www/mobile/radar.gif
 
-      - name: Run weather script Bai
+      - name: Run weather script BAI
         timeout-minutes: 1
         continue-on-error: true
         run: |
