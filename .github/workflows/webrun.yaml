@@ -75,7 +75,7 @@ jobs:
       - name: move Wild for web upload
         run: |
           mkdir www/wild
-          cp db/frontEnd.html www/wild/index.html
+          cp db/frontEndmobile.html www/wild/index.html
           cp db/logo.gif www/wild/logo.gif
           cp db/radar.gif www/wild/radar.gif
 
